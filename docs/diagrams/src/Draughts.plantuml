@@ -1,6 +1,6 @@
-@startuml TicTacToe
+@startuml Draughts
 
-title Secuencia versiones Tictactoe
+title Secuencia versiones Draughts
 
 state Solucion {
 [*] --> domainModel

@@ -4,5 +4,5 @@ public interface InteractorControllersVisitor {
 	
 	void visit(StartController startController);
 	void visit(PlayController playController);
-	void visit(ResumeController resumeController);
+	boolean visit(ResumeController resumeController);
 }

@@ -1,11 +1,14 @@
 package usantatecla.draughts.models;
 
+import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Error;
+
 import java.util.List;
 
 public abstract class Piece {
 
 	protected Color color;
-	private static String[] CODES = {"b", "n"};
+	private static String[] CODES = {" b ", " n "};
 
 	Piece(Color color) {
 		assert color != null;

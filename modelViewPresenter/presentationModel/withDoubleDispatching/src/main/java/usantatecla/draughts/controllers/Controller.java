@@ -1,11 +1,11 @@
 package usantatecla.draughts.controllers;
 
-import usantatecla.draughts.models.Color;
 import usantatecla.draughts.models.Coordinate;
 import usantatecla.draughts.models.Game;
 import usantatecla.draughts.models.State;
+import usantatecla.draughts.types.Color;
 
-class Controller {
+public class Controller {
 
     protected Game game;
     protected State state;

@@ -1,5 +1,8 @@
 package usantatecla.draughts.models;
 
+import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Error;
+
 public class Pawn extends Piece {
 
     private static char[] CHARACTERS = {'b', 'n'};

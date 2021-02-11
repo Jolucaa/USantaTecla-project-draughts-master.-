@@ -90,7 +90,7 @@ public class Coordinate {
         return diagonalCoordinates;
     }
 
-    boolean isBlack() {
+    public boolean isBlack() {
         return (this.row + this.column) % 2 != 0;
     }
 
@@ -102,7 +102,7 @@ public class Coordinate {
         return this.row == Coordinate.LOWER_LIMIT;
     }
 
-    int getRow() {
+    public int getRow() {
         return this.row;
     }
 

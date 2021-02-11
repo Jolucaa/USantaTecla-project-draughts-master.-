@@ -1,5 +1,7 @@
 package usantatecla.draughts.models;
 
+import usantatecla.draughts.types.Color;
+
 class Turn {
 
   private Color color;

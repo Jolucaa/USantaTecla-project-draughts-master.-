@@ -1,4 +1,6 @@
-package usantatecla.draughts.models;
+package usantatecla.draughts.types;
+
+import usantatecla.draughts.models.Coordinate;
 
 public enum Color {
     WHITE,
@@ -16,7 +18,7 @@ public enum Color {
         return false;
     }
 
-    static Color getInitialColor(final Coordinate coordinate) {
+    public static Color getInitialColor(final Coordinate coordinate) {
         if (coordinate.isBlack())
             for(Color color : Color.values())
                 if (color.isInitialRow(coordinate.getRow()))

@@ -1,5 +1,8 @@
 package usantatecla.draughts.models;
 
+import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Error;
+
 public class Draught extends Piece {
 
   Draught(Color color) {

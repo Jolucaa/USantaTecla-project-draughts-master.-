@@ -1,5 +1,8 @@
 package usantatecla.draughts.models;
 
+import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Error;
+
 import java.util.ArrayList;
 import java.util.List;
 

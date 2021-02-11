@@ -9,7 +9,7 @@ public class ResumeController extends InteractorController {
         super(game, state);
 	}
 
-	public void next() {
+	public void nextState() {
         this.state.next();
 	}
 
@@ -19,9 +19,9 @@ public class ResumeController extends InteractorController {
 	}
 
     @Override
-	public void accept(InteractorControllersVisitor controllersVisitor) {
-		assert controllersVisitor != null;
-		controllersVisitor.visit(this);
+	public void accept(InteractorControllersVisitor interactorControllersVisitor) {
+		assert interactorControllersVisitor != null;
+		interactorControllersVisitor.visit(this);
 	}
 
 }

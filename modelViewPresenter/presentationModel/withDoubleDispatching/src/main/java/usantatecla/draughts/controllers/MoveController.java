@@ -3,7 +3,7 @@ package usantatecla.draughts.controllers;
 import usantatecla.draughts.models.Coordinate;
 import usantatecla.draughts.models.Game;
 import usantatecla.draughts.models.State;
-import usantatecla.draughts.models.Error;
+import usantatecla.draughts.types.Error;
 
 class MoveController extends Controller {
 

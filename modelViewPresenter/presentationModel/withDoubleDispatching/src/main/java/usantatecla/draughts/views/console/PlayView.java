@@ -1,23 +1,21 @@
-package usantatecla.draughts.views;
+package usantatecla.draughts.views.console;
+
+import usantatecla.draughts.controllers.PlayController;
+import usantatecla.draughts.models.Coordinate;
+import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Error;
+import usantatecla.draughts.views.Message;
+import usantatecla.utils.views.Console;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import usantatecla.draughts.controllers.PlayController;
-import usantatecla.draughts.models.Error;
-import usantatecla.draughts.models.Color;
-import usantatecla.draughts.models.Coordinate;
-
-class PlayView extends SubView {
-    
-    private static final String COLOR_PARAM = "#color";
-    private static final String[] COLOR_VALUES = { "blancas", "negras" };
-    private static final String PROMPT = "Mueven las " + PlayView.COLOR_PARAM + ": ";
-    private static final String CANCEL_FORMAT = "-1";
+class PlayView {
+    //TODO enviar a Message
+    private static final String[] COLOR_VALUES = { "Whites", "Blacks" };
     private static final String MOVEMENT_FORMAT = "[1-8]{2}(\\.[1-8]{2}){1,2}";
-    private static final String ERROR_MESSAGE = "Error!!! Formato incorrecto";
-    private static final String LOST_MESSAGE = "Derrota!!! No puedes mover tus fichas!!!";
+
     private String string;
 
     PlayView() {
@@ -37,7 +35,7 @@ class PlayView extends SubView {
                 this.writeError();
             } else {
                 error = playController.move(this.getCoordinates());
-                new GameView().write(playController);
+                new BoardView().write(playController);
                 if (error == null && playController.isBlocked())
                     this.writeLost();
             }
@@ -45,12 +43,12 @@ class PlayView extends SubView {
     }
 
     private String read(Color color) {
-        final String titleColor = PlayView.PROMPT.replace(PlayView.COLOR_PARAM ,PlayView.COLOR_VALUES[color.ordinal()]);
-        return this.console.readString(titleColor);
+        final String titleColor = Message.PROMPT.toString().replace(Message.COLOR_PARAM.toString() ,PlayView.COLOR_VALUES[color.ordinal()]);
+        return Console.getInstance().readString(titleColor);
     }
 
     private boolean isCanceledFormat() {
-        return string.equals(PlayView.CANCEL_FORMAT);
+        return string.equals(Message.CANCEL_FORMAT);
     }
 
     private boolean isMoveFormat() {
@@ -58,12 +56,12 @@ class PlayView extends SubView {
     }
 
     private void writeError(){
-        this.console.writeln(PlayView.ERROR_MESSAGE);
+        new ErrorView().writeln(usantatecla.draughts.types.Error.ERROR);
     }
 
     private Coordinate[] getCoordinates() {
         assert this.isMoveFormat();
-        List<Coordinate> coordinateList = new ArrayList<Coordinate>();
+        List<Coordinate> coordinateList = new ArrayList<>();
         while (string.length() > 0){
             coordinateList.add(Coordinate.getInstance(string.substring(0, 2)));
             string = string.substring(2, string.length());
@@ -78,7 +76,7 @@ class PlayView extends SubView {
     }
 
     private void writeLost() {
-        this.console.writeln(LOST_MESSAGE);
+        Console.getInstance().writeln(Message.LOST_MESSAGE.toString());
     }
 
 }

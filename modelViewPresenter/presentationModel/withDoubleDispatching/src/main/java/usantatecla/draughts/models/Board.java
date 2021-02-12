@@ -1,6 +1,7 @@
 package usantatecla.draughts.models;
 
 import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Coordinate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,10 +12,22 @@ class Board {
     private Piece[][] pieces;
 
     Board() {
-        this.pieces = new Piece[Coordinate.getDimension()][Coordinate.getDimension()];
-        for (int i = 0; i < Coordinate.getDimension(); i++)
-            for (int j = 0; j < Coordinate.getDimension(); j++)
+        this.pieces = new Piece[Coordinate.DIMENSION][Coordinate.DIMENSION];
+        for (int i = 0; i < Coordinate.DIMENSION; i++)
+            for (int j = 0; j < Coordinate.DIMENSION; j++)
                 this.pieces[i][j] = null;
+    }
+
+    void reset(){
+        for (int i = 0; i < Coordinate.DIMENSION; i++)
+            for (int j = 0; j < Coordinate.DIMENSION; j++) {
+                Coordinate coordinate = new Coordinate(i, j);
+                Color color = Color.getInitialColor(coordinate);
+                Piece piece = null;
+                if (color != null)
+                    piece = new Pawn(color);
+                this.put(coordinate, piece);
+            }
     }
 
     Piece getPiece(Coordinate coordinate) {
@@ -68,6 +81,32 @@ class Board {
 
     boolean isEmpty(Coordinate coordinate) {
         return this.getPiece(coordinate) == null;
+    }
+
+    void pairMove(List<Coordinate> removedCoordinates, int pair, Coordinate... coordinates) {
+        Coordinate forRemoving = this.getBetweenDiagonalPiece(pair, coordinates);
+        if (forRemoving != null) {
+            removedCoordinates.add(0, forRemoving);
+            this.remove(forRemoving);
+        }
+        this.move(coordinates[pair], coordinates[pair + 1]);
+        if (this.getPiece(coordinates[pair + 1]).isLimit(coordinates[pair + 1])) {
+            Color color = this.getColor(coordinates[pair + 1]);
+            this.remove(coordinates[pair + 1]);
+            this.put(coordinates[pair + 1], new Draught(color));
+        }
+    }
+
+    Coordinate getBetweenDiagonalPiece(int pair, Coordinate... coordinates) {
+        assert coordinates[pair].isOnDiagonal(coordinates[pair + 1]);
+        List<Coordinate> betweenCoordinates = coordinates[pair].getBetweenDiagonalCoordinates(coordinates[pair + 1]);
+        if (betweenCoordinates.isEmpty())
+            return null;
+        for (Coordinate coordinate : betweenCoordinates) {
+            if (this.getPiece(coordinate) != null)
+                return coordinate;
+        }
+        return null;
     }
 
     @Override

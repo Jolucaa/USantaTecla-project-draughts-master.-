@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Coordinate {
 
-    private int row;
+    /*private int row;
     private int column;
     private static final int LOWER_LIMIT = 0;
     private static final int UPPER_LIMIT = 7;
@@ -36,25 +36,10 @@ public class Coordinate {
                 && column <= Coordinate.UPPER_LIMIT;
     }
 
-    private Coordinate substract(Coordinate coordinate) {
-        return new Coordinate(this.row - coordinate.row, this.column - coordinate.column);
-    }
+
 
     private Coordinate plus(Coordinate coordinate) {
         return new Coordinate(this.row + coordinate.row, this.column + coordinate.column);
-    }
-
-    Direction getDirection(Coordinate coordinate) {
-        assert coordinate != null;
-        Coordinate substract = coordinate.substract(this);
-        for (Direction direction : Direction.values()) 
-            if (direction.isOnDirection(substract)) 
-                return direction;
-        return null;
-    }
-
-    boolean isOnDiagonal(Coordinate coordinate) {
-        return this.getDirection(coordinate) != null;
     }
 
     int getDiagonalDistance(Coordinate coordinate) {
@@ -66,18 +51,6 @@ public class Coordinate {
         assert this.getDiagonalDistance(coordinate) == 2;
         final Direction direction = this.getDirection(coordinate);
         return this.plus(direction.getDistanceCoordinate(1));
-    }
-
-    List<Coordinate> getBetweenDiagonalCoordinates(Coordinate coordinate){
-        assert this.isOnDiagonal(coordinate);
-        List<Coordinate> coordinates = new ArrayList<Coordinate>();
-        final Direction direction = this.getDirection(coordinate);
-        Coordinate cursor = this.plus(direction.getDistanceCoordinate(1));
-        while (!cursor.equals(coordinate)){
-            coordinates.add(cursor);
-            cursor = cursor.plus(direction.getDistanceCoordinate(1));
-        }
-        return coordinates;
     }
 
     List<Coordinate> getDiagonalCoordinates(int level) {
@@ -142,6 +115,6 @@ public class Coordinate {
         if (row != other.row)
             return false;
         return true;
-    }
+    }*/
 
 }

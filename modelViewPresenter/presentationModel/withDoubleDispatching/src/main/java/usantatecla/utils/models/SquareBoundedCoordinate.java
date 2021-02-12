@@ -38,7 +38,7 @@ public abstract class SquareBoundedCoordinate {
 
     protected abstract int getDimension();
 
-    public Direction getDirection(SquareBoundedCoordinate coordinate) {
+    /*public Direction getDirection(SquareBoundedCoordinate coordinate) { //TODO
         if (this.equals(coordinate) || this.isNull() || coordinate.isNull()) {
             return Direction.NULL;
         }
@@ -46,11 +46,29 @@ public abstract class SquareBoundedCoordinate {
             return Direction.INVERSE_DIAGONAL;
         }
         return this.adaptee.getDirection(coordinate.adaptee);
-    }
+    }*/
 
     public boolean inInverseDiagonal() {
         ConcreteCoordinate coordinate = (ConcreteCoordinate) this.adaptee;
         return coordinate.getRow() + coordinate.getColumn() == this.getDimension() - 1;
+    }
+
+    Direction getDirection(SquareBoundedCoordinate coordinate) {
+        assert coordinate != null;
+        ConcreteCoordinate substract = this.substract(this);
+        for (Direction direction : Direction.values())
+            if (direction.isOnDirection(substract))
+                return direction;
+        return null;
+    }
+
+    private ConcreteCoordinate substract(SquareBoundedCoordinate squareBoundedCoordinate) {
+        ConcreteCoordinate coordinate = (ConcreteCoordinate) this.adaptee;
+        return new ConcreteCoordinate(coordinate.getRow() - squareBoundedCoordinate.getRow(), coordinate.getColumn() - squareBoundedCoordinate.getColumn());
+    }
+
+    boolean isOnDiagonal(SquareBoundedCoordinate coordinate) {
+        return this.getDirection(coordinate) != null;
     }
 
     public void random() {

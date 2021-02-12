@@ -10,6 +10,11 @@ class Turn {
     this.color = Color.WHITE;
   }
 
+  void reset(){
+    if (this.getColor() != Color.WHITE)
+      this.change();
+  }
+
   void change() {
     this.color = this.getOppositeColor();
   }

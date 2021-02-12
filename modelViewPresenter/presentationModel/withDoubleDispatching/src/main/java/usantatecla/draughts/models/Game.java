@@ -22,32 +22,23 @@ public class Game {
 	}
 
 	public void reset() {
-		for (int i = 0; i < Coordinate.getDimension(); i++)
-			for (int j = 0; j < Coordinate.getDimension(); j++) {
-				Coordinate coordinate = new Coordinate(i, j);
-				Color color = Color.getInitialColor(coordinate);
-				Piece piece = null;
-				if (color != null)
-					piece = new Pawn(color);
-				this.board.put(coordinate, piece);
-			}
-		if (this.turn.getColor() != Color.WHITE)
-			this.turn.change();
+		this.board.reset();
+		this.turn.reset();
 	}
 
 	public Error move(Coordinate... coordinates) {
-		Error error = null;
+		Error error = Error.NULL;
 		List<Coordinate> removedCoordinates = new ArrayList<Coordinate>();
 		int pair = 0;
 		do {
 			error = this.isCorrectPairMove(pair, coordinates);
-			if (error == null) {
-				this.pairMove(removedCoordinates, pair, coordinates);
+			if (error.isNull()) {
+				this.board.pairMove(removedCoordinates, pair, coordinates);
 				pair++;
 			}
-		} while (pair < coordinates.length - 1 && error == null);
+		} while (pair < coordinates.length - 1 && error.isNull());
 		error = this.isCorrectGlobalMove(error, removedCoordinates, coordinates);
-		if (error == null)
+		if (error.isNull())
 			this.turn.change();
 		else
 			this.unMovesUntilPair(removedCoordinates, pair, coordinates);
@@ -68,45 +59,12 @@ public class Game {
 		return this.board.getPiece(coordinates[pair]).isCorrectMovement(betweenDiagonalPieces, pair, coordinates);
 	}
 
-	private void pairMove(List<Coordinate> removedCoordinates, int pair, Coordinate... coordinates) {
-		Coordinate forRemoving = this.getBetweenDiagonalPiece(pair, coordinates);
-		if (forRemoving != null) {
-			removedCoordinates.add(0, forRemoving);
-			this.board.remove(forRemoving);
-		}
-		this.board.move(coordinates[pair], coordinates[pair + 1]);
-		if (this.board.getPiece(coordinates[pair + 1]).isLimit(coordinates[pair + 1])) {
-			Color color = this.board.getColor(coordinates[pair + 1]);
-			this.board.remove(coordinates[pair + 1]);
-			this.board.put(coordinates[pair + 1], new Draught(color));
-		}
-	}
-
-	private Coordinate getBetweenDiagonalPiece(int pair, Coordinate... coordinates) {
-		assert coordinates[pair].isOnDiagonal(coordinates[pair + 1]);
-		List<Coordinate> betweenCoordinates = coordinates[pair].getBetweenDiagonalCoordinates(coordinates[pair + 1]);
-		if (betweenCoordinates.isEmpty())
-			return null;
-		for (Coordinate coordinate : betweenCoordinates) {
-			if (this.getPiece(coordinate) != null)
-				return coordinate;
-		}
-		return null;
-	}
-
 	private Error isCorrectGlobalMove(Error error, List<Coordinate> removedCoordinates, Coordinate... coordinates){
 		if (error != null)
 			return error;
 		if (coordinates.length > 2 && coordinates.length > removedCoordinates.size() + 1)
 			return Error.TOO_MUCH_JUMPS;
 		return null;
-	}
-
-	private void unMovesUntilPair(List<Coordinate> removedCoordinates, int pair, Coordinate... coordinates) {
-		for (int j = pair; j > 0; j--)
-			this.board.move(coordinates[j], coordinates[j - 1]);
-		for (Coordinate removedPiece : removedCoordinates)
-			this.board.put(removedPiece, new Pawn(this.getOppositeTurnColor()));
 	}
 
 	public boolean isBlocked() {
@@ -121,12 +79,19 @@ public class Game {
 		for (int i = 0; i < this.getDimension(); i++) {
 			for (int j = 0; j < this.getDimension(); j++) {
 				Coordinate coordinate = new Coordinate(i, j);
-				Piece piece = this.getPiece(coordinate);
+				Piece piece = this.board.getPiece(coordinate);
 				if (piece != null && piece.getColor() == this.getTurnColor())
 					coordinates.add(coordinate);
 			}
 		}
 		return coordinates;
+	}
+
+	private void unMovesUntilPair(List<Coordinate> removedCoordinates, int pair, Coordinate... coordinates) {
+		for (int j = pair; j > 0; j--)
+			this.move(coordinates[j], coordinates[j - 1]);
+		for (Coordinate removedPiece : removedCoordinates)
+			this.board.put(removedPiece, new Pawn(this.getOppositeTurnColor()));
 	}
 
 	private boolean isBlocked(Coordinate coordinate) {
@@ -154,11 +119,6 @@ public class Game {
 
 	private Color getOppositeTurnColor() {
 		return this.turn.getOppositeColor();
-	}
-
-	public Piece getPiece(Coordinate coordinate) {
-		assert coordinate != null;
-		return this.board.getPiece(coordinate);
 	}
 
 	public int getDimension() {

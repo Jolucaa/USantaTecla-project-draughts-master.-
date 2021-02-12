@@ -113,7 +113,7 @@ class Board {
     public String toString() {
         String string = "";
         string += this.toStringHorizontalNumbers();
-        for (int i = 0; i < Coordinate.getDimension(); i++)
+        for (int i = 0; i < Coordinate.DIMENSION; i++)
             string += this.toStringHorizontalPiecesWithNumbers(i);
         string += this.toStringHorizontalNumbers();
         return string;
@@ -121,14 +121,14 @@ class Board {
 
     private String toStringHorizontalNumbers() {
         String string = " ";
-        for (int j = 0; j < Coordinate.getDimension(); j++)
+        for (int j = 0; j < Coordinate.DIMENSION; j++)
             string += j;
         return string + "\n";
     }
 
     private String toStringHorizontalPiecesWithNumbers(int row) {
         String string = " " + row;
-        for (int j = 0; j < Coordinate.getDimension(); j++) {
+        for (int j = 0; j < Coordinate.DIMENSION; j++) {
             Piece piece = this.getPiece(new Coordinate(row, j));
             if (piece == null)
                 string += " ";

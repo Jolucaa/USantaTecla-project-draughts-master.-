@@ -2,6 +2,7 @@ package usantatecla.draughts.models;
 
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Error;
+import usantatecla.draughts.types.Coordinate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +123,7 @@ public class Game {
 	}
 
 	public int getDimension() {
-		return Coordinate.getDimension();
+		return Coordinate.DIMENSION;
 	}
 
 	@Override

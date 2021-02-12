@@ -26,15 +26,28 @@ public class Coordinate extends SquareBoundedCoordinate {
     }
 
     public List<Coordinate> getBetweenDiagonalCoordinates(Coordinate coordinate){
-        assert this.di isOnDiagonal(coordinate);
+        assert this.isOnDiagonal(coordinate);
         List<Coordinate> coordinates = new ArrayList<Coordinate>();
         final Direction direction = this.getDirection(coordinate);
-        Coordinate cursor = this.plus(direction.getDistanceCoordinate(1));
+        ConcreteCoordinate cursor = this.plus(direction.getDistanceCoordinate(1));
+        Coordinate cursor1 = new Coordinate(cursor.getRow(), cursor.getColumn());
         while (!cursor.equals(coordinate)){
-            coordinates.add(cursor);
-            cursor = cursor.plus(direction.getDistanceCoordinate(1));
+            coordinates.add(cursor1);
+            cursor = cursor1.plus(direction.getDistanceCoordinate(1));
         }
         return coordinates;
+    }
+
+    public boolean isBlack() {
+        return (this.getRow() + this.getColumn()) % 2 != 0;
+    }
+
+    public boolean isLast() {
+        return this.getRow() == Coordinate.UPPER_LIMIT;
+    }
+
+    public boolean isFirst() {
+        return this.getRow() == Coordinate.LOWER_LIMIT;
     }
 
     @Override

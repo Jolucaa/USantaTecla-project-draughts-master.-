@@ -1,5 +1,7 @@
 package usantatecla.utils.models;
 
+import usantatecla.draughts.types.Coordinate;
+
 public enum Direction {
 
 	VERTICAL(0, 1),
@@ -18,6 +20,12 @@ public enum Direction {
 	Direction(int horizontalShift, int verticalShift) {
 		this.horizontalShift = horizontalShift;
 		this.verticalShift = verticalShift;
+	}
+
+	public SquareBoundedCoordinate getDistanceCoordinate(int distance) {
+		int row = this.horizontalShift * distance;
+		int column = this.verticalShift * distance;
+		return new Coordinate(row, column);
 	}
 
 	public boolean isNull() {

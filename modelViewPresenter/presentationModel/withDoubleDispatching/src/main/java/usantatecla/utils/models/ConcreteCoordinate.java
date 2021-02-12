@@ -32,7 +32,7 @@ public class ConcreteCoordinate implements Coordinate {
 			return Direction.VERTICAL;
 		}
 		if (this.inMainDiagonal() && coordinate.inMainDiagonal()) {
-			return Direction.MAIN_DIAGONAL;
+			//TODO return Direction.MAIN_DIAGONAL;
 		}
 		return Direction.NULL;
 	}

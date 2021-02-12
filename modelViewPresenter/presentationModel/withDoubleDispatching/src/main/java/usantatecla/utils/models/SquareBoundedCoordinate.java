@@ -53,7 +53,7 @@ public abstract class SquareBoundedCoordinate {
         return coordinate.getRow() + coordinate.getColumn() == this.getDimension() - 1;
     }
 
-    Direction getDirection(SquareBoundedCoordinate coordinate) {
+    protected Direction getDirection(SquareBoundedCoordinate coordinate) {
         assert coordinate != null;
         ConcreteCoordinate substract = this.substract(this);
         for (Direction direction : Direction.values())
@@ -67,7 +67,11 @@ public abstract class SquareBoundedCoordinate {
         return new ConcreteCoordinate(coordinate.getRow() - squareBoundedCoordinate.getRow(), coordinate.getColumn() - squareBoundedCoordinate.getColumn());
     }
 
-    boolean isOnDiagonal(SquareBoundedCoordinate coordinate) {
+    protected ConcreteCoordinate plus(SquareBoundedCoordinate coordinate) {
+        return new ConcreteCoordinate(this.getRow() + coordinate.getRow(), this.getColumn() + coordinate.getColumn());
+    }
+
+    public boolean isOnDiagonal(SquareBoundedCoordinate coordinate) {
         return this.getDirection(coordinate) != null;
     }
 

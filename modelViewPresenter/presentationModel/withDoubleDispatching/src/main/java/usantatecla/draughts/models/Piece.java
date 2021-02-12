@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class Piece {
 
 	protected Color color;
-	private static String[] CODES = {" b ", " n "};
+	private static String[] CODES = {" w ", " b "};
 
 	Piece(Color color) {
 		assert color != null;

@@ -1,6 +1,6 @@
 package usantatecla.draughts.types;
 
-import usantatecla.draughts.types.Coordinate;
+import usantatecla.draughts.models.Coordinate;
 
 public enum Color {
     WHITE,

@@ -8,4 +8,5 @@ public interface Coordinate {
   boolean inHorizontal(Coordinate coordinate);
   boolean inVertical(Coordinate coordinate);
   boolean inMainDiagonal();
+
 }

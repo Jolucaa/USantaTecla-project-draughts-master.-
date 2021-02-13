@@ -4,9 +4,44 @@ import usantatecla.draughts.types.Color;
 
 class Turn {
 
-  private Color color;
+  private Board board;
+  public static final int NUMBER_PLAYERS = 2;
+  private Player[] players;
+  private int activePlayer;
 
-  Turn() {
+  Turn(Board board) {
+    assert board != null;
+    this.board = board;
+    this.players = new Player[Turn.NUMBER_PLAYERS];
+    this.reset();
+  }
+
+  void reset() {
+    for (int i = 0; i < Turn.NUMBER_PLAYERS; i++) {
+      this.players[i] = new Player(Color.get(i), this.board);
+    }
+    this.activePlayer = 0;
+  }
+
+  void next() {
+    if (!this.board.isFinished(this.getActiveColor())) {
+      this.activePlayer = (this.activePlayer + 1) % Turn.NUMBER_PLAYERS;
+    }
+  }
+
+  Player getActivePlayer() {
+    return this.players[this.activePlayer];
+  }
+
+  Color getActiveColor() {
+    return this.getActivePlayer().getColor();
+  }
+
+  void movePiece(Coordinate origin, Coordinate target){
+    this.getActivePlayer().movePiece(origin, target);
+  }
+
+  /*Turn() {
     this.color = Color.WHITE;
   }
 
@@ -52,6 +87,6 @@ class Turn {
     if (color != other.color)
       return false;
     return true;
-  }
+  }*/
 
 }

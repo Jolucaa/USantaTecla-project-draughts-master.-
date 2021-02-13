@@ -2,6 +2,7 @@ package usantatecla.draughts.models;
 
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Coordinate;
+import usantatecla.utils.models.Direction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +19,7 @@ class Board {
                 this.pieces[i][j] = null;
     }
 
-    void reset(){
+    void reset() {
         for (int i = 0; i < Coordinate.DIMENSION; i++)
             for (int j = 0; j < Coordinate.DIMENSION; j++) {
                 Coordinate coordinate = new Coordinate(i, j);
@@ -26,50 +27,42 @@ class Board {
                 Piece piece = null;
                 if (color != null)
                     piece = new Pawn(color);
-                this.put(coordinate, piece);
+                this.putPiece(coordinate, piece);
             }
     }
 
-    Piece getPiece(Coordinate coordinate) {
-        assert coordinate != null;
-        return this.pieces[coordinate.getRow()][coordinate.getColumn()];
+    void movePiece(Coordinate origin, Coordinate target) {
+        assert !origin.isNull() && !this.isEmpty(origin);
+        assert !target.isNull() && this.isEmpty(target);
+        assert !origin.equals(target);
+
+        Piece piece = this.getPiece(origin);
+        this.putPiece(origin, Piece.NULL);
+        this.putPiece(target, piece);
+        this.removePiecesInBetween(origin, target);
     }
 
-    void put(Coordinate coordinate, Piece piece) {
+    private void putPiece(Coordinate coordinate, Piece piece) {
+        assert !coordinate.isNull();
+
         this.pieces[coordinate.getRow()][coordinate.getColumn()] = piece;
     }
 
-    Piece remove(Coordinate coordinate) {
-        assert this.getPiece(coordinate) != null;
-        Piece piece = this.getPiece(coordinate);
-        this.put(coordinate, null);
-        return piece;
-    }
-
-    void move(Coordinate origin, Coordinate target) {
-        assert this.getPiece(origin) != null;
-        this.put(target, this.remove(origin));
-    }
-
-    List<Piece> getBetweenDiagonalPieces(Coordinate origin, Coordinate target) {
-        List<Piece> betweenDiagonalPieces = new ArrayList<Piece>();
-        if (origin.isOnDiagonal(target))
-            for (Coordinate coordinate : origin.getBetweenDiagonalCoordinates(target)) {
-                Piece piece = this.getPiece(coordinate);
-                if (piece != null)
-                    betweenDiagonalPieces.add(piece);
+    private void removePiecesInBetween(Coordinate origin, Coordinate target) {
+        Coordinate below = origin.getRow() < target.getRow() ? origin : target;
+        Coordinate above = origin.getRow() > target.getRow() ? origin : target;
+        for (int i = below.getRow() + 1; i < above.getRow(); i++) {
+            if (below.getDirection(above) == Direction.MAIN_DIAGONAL) {
+                this.pieces[i][below.getColumn() + (i - below.getRow())] = null;
+            } else {
+                this.pieces[i][below.getColumn() - (i - below.getRow())] = null;
             }
-        return betweenDiagonalPieces;
+        }
     }
 
-    int getAmountBetweenDiagonalPieces(Coordinate origin, Coordinate target) {
-        if (!origin.isOnDiagonal(target))
-            return 0;
-        int betweenDiagonalPieces = 0;
-        for (Coordinate coordinate : origin.getBetweenDiagonalCoordinates(target))
-            if (this.getPiece(coordinate) != null)
-                betweenDiagonalPieces++;
-        return betweenDiagonalPieces;
+    private Piece getPiece(Coordinate coordinate) {
+        assert coordinate != null;
+        return this.pieces[coordinate.getRow()][coordinate.getColumn()];
     }
 
     Color getColor(Coordinate coordinate) {
@@ -81,32 +74,6 @@ class Board {
 
     boolean isEmpty(Coordinate coordinate) {
         return this.getPiece(coordinate) == null;
-    }
-
-    void pairMove(List<Coordinate> removedCoordinates, int pair, Coordinate... coordinates) {
-        Coordinate forRemoving = this.getBetweenDiagonalPiece(pair, coordinates);
-        if (forRemoving != null) {
-            removedCoordinates.add(0, forRemoving);
-            this.remove(forRemoving);
-        }
-        this.move(coordinates[pair], coordinates[pair + 1]);
-        if (this.getPiece(coordinates[pair + 1]).isLimit(coordinates[pair + 1])) {
-            Color color = this.getColor(coordinates[pair + 1]);
-            this.remove(coordinates[pair + 1]);
-            this.put(coordinates[pair + 1], new Draught(color));
-        }
-    }
-
-    Coordinate getBetweenDiagonalPiece(int pair, Coordinate... coordinates) {
-        assert coordinates[pair].isOnDiagonal(coordinates[pair + 1]);
-        List<Coordinate> betweenCoordinates = coordinates[pair].getBetweenDiagonalCoordinates(coordinates[pair + 1]);
-        if (betweenCoordinates.isEmpty())
-            return null;
-        for (Coordinate coordinate : betweenCoordinates) {
-            if (this.getPiece(coordinate) != null)
-                return coordinate;
-        }
-        return null;
     }
 
     @Override

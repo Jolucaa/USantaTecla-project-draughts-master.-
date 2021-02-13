@@ -2,7 +2,6 @@ package usantatecla.draughts.models;
 
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Error;
-import usantatecla.draughts.types.Coordinate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +11,9 @@ public class Game {
 	private Board board;
 	private Turn turn;
 
-	Game(Board board) {
-		this.turn = new Turn();
-		this.board = board;
-	}
-
 	public Game() {
-		this(new Board());
-		this.reset();
+		this.board = new Board();
+		this.turn = new Turn(this.board);
 	}
 
 	public void reset() {
@@ -27,23 +21,12 @@ public class Game {
 		this.turn.reset();
 	}
 
+	public void movePiece(Coordinate origin, Coordinate target){
+		this.turn.movePiece(origin, target);
+	}
+
 	public Error move(Coordinate... coordinates) {
-		Error error = Error.NULL;
-		List<Coordinate> removedCoordinates = new ArrayList<Coordinate>();
-		int pair = 0;
-		do {
-			error = this.isCorrectPairMove(pair, coordinates);
-			if (error.isNull()) {
-				this.board.pairMove(removedCoordinates, pair, coordinates);
-				pair++;
-			}
-		} while (pair < coordinates.length - 1 && error.isNull());
-		error = this.isCorrectGlobalMove(error, removedCoordinates, coordinates);
-		if (error.isNull())
-			this.turn.change();
-		else
-			this.unMovesUntilPair(removedCoordinates, pair, coordinates);
-		return error;
+
 	}
 
 	private Error isCorrectPairMove(int pair, Coordinate... coordinates) {
@@ -68,6 +51,13 @@ public class Game {
 		return null;
 	}
 
+	private void unMovesUntilPair(List<Coordinate> removedCoordinates, int pair, Coordinate... coordinates) {
+		for (int j = pair; j > 0; j--)
+			this.board.move(coordinates[j], coordinates[j - 1]);
+		for (Coordinate removedPiece : removedCoordinates)
+			this.board.put(removedPiece, new Pawn(this.getOppositeTurnColor()));
+	}
+
 	public boolean isBlocked() {
 		for (Coordinate coordinate : this.getCoordinatesWithActualColor())
 			if (!this.isBlocked(coordinate))
@@ -80,19 +70,12 @@ public class Game {
 		for (int i = 0; i < this.getDimension(); i++) {
 			for (int j = 0; j < this.getDimension(); j++) {
 				Coordinate coordinate = new Coordinate(i, j);
-				Piece piece = this.board.getPiece(coordinate);
+				Piece piece = this.getPiece(coordinate);
 				if (piece != null && piece.getColor() == this.getTurnColor())
 					coordinates.add(coordinate);
 			}
 		}
 		return coordinates;
-	}
-
-	private void unMovesUntilPair(List<Coordinate> removedCoordinates, int pair, Coordinate... coordinates) {
-		for (int j = pair; j > 0; j--)
-			this.move(coordinates[j], coordinates[j - 1]);
-		for (Coordinate removedPiece : removedCoordinates)
-			this.board.put(removedPiece, new Pawn(this.getOppositeTurnColor()));
 	}
 
 	private boolean isBlocked(Coordinate coordinate) {
@@ -122,8 +105,13 @@ public class Game {
 		return this.turn.getOppositeColor();
 	}
 
+	public Piece getPiece(Coordinate coordinate) {
+		assert coordinate != null;
+		return this.board.getPiece(coordinate);
+	}
+
 	public int getDimension() {
-		return Coordinate.DIMENSION;
+		return Coordinate.getDimension();
 	}
 
 	@Override

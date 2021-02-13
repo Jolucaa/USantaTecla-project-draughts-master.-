@@ -2,7 +2,6 @@ package usantatecla.draughts.models;
 
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Error;
-import usantatecla.draughts.types.Coordinate;
 
 public class Pawn extends Piece {
 

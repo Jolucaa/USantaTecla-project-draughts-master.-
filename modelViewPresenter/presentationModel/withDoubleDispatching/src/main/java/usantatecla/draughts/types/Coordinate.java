@@ -1,17 +1,11 @@
 package usantatecla.draughts.types;
 
 import usantatecla.utils.models.ConcreteCoordinate;
-import usantatecla.utils.models.Direction;
 import usantatecla.utils.models.SquareBoundedCoordinate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Coordinate extends SquareBoundedCoordinate {
 
-    private static final int LOWER_LIMIT = 0;
-    private static final int UPPER_LIMIT = 7;
-    public static final int DIMENSION = UPPER_LIMIT + 1;
+    public static final int DIMENSION = 8;
 
     public Coordinate() {
         super();
@@ -25,33 +19,8 @@ public class Coordinate extends SquareBoundedCoordinate {
         super(concreteCoordinate);
     }
 
-    public List<Coordinate> getBetweenDiagonalCoordinates(Coordinate coordinate){
-        assert this.isOnDiagonal(coordinate);
-        List<Coordinate> coordinates = new ArrayList<Coordinate>();
-        final Direction direction = this.getDirection(coordinate);
-        ConcreteCoordinate cursor = this.plus(direction.getDistanceCoordinate(1));
-        Coordinate cursor1 = new Coordinate(cursor.getRow(), cursor.getColumn());
-        while (!cursor.equals(coordinate)){
-            coordinates.add(cursor1);
-            cursor = cursor1.plus(direction.getDistanceCoordinate(1));
-        }
-        return coordinates;
-    }
-
-    public boolean isBlack() {
-        return (this.getRow() + this.getColumn()) % 2 != 0;
-    }
-
-    public boolean isLast() {
-        return this.getRow() == Coordinate.UPPER_LIMIT;
-    }
-
-    public boolean isFirst() {
-        return this.getRow() == Coordinate.LOWER_LIMIT;
-    }
-
     @Override
-    public int getDimension() {
+    protected int getDimension() {
         return Coordinate.DIMENSION;
     }
 

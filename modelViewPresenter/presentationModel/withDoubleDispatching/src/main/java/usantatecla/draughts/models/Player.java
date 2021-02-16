@@ -15,6 +15,7 @@ public class Player {
         this.board = board;
     }
 
+    //TODO Hacer control de errores
     void movePiece(Coordinate origin, Coordinate target){
         this.board.movePiece(origin, target);
     }

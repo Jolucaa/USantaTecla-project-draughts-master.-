@@ -19,6 +19,14 @@ public class Coordinate extends SquareBoundedCoordinate {
         super(concreteCoordinate);
     }
 
+    public Coordinate getOrthogonalVector(Coordinate target) {
+        return new Coordinate((int) Math.signum(target.getRow() - this.getRow()), (int) Math.signum(target.getColumn() - this.getColumn()));
+    }
+
+    public Coordinate coordinatesSum(Coordinate coordinate) {
+        return new Coordinate(this.getRow()+coordinate.getRow(), this.getColumn()+coordinate.getColumn());
+    }
+
     @Override
     protected int getDimension() {
         return Coordinate.DIMENSION;

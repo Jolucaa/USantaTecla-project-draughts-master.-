@@ -48,15 +48,11 @@ class Board {
         this.pieces[coordinate.getRow()][coordinate.getColumn()] = piece;
     }
 
+    //TODO habría que crear un variable de coordenada auxiliar igualada a la de origen??
     private void removePiecesInBetween(Coordinate origin, Coordinate target) {
-        Coordinate below = origin.getRow() < target.getRow() ? origin : target;
-        Coordinate above = origin.getRow() > target.getRow() ? origin : target;
-        for (int i = below.getRow() + 1; i < above.getRow(); i++) {
-            if (below.getDirection(above) == Direction.MAIN_DIAGONAL) {
-                this.pieces[i][below.getColumn() + (i - below.getRow())] = null;
-            } else {
-                this.pieces[i][below.getColumn() - (i - below.getRow())] = null;
-            }
+        while (!origin.equals(target)) {
+            origin.coordinatesSum(origin.getOrthogonalVector(target));
+            this.pieces[origin.getRow()][origin.getColumn()] = null;
         }
     }
 

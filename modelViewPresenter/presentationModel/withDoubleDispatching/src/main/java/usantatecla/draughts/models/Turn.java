@@ -1,6 +1,8 @@
 package usantatecla.draughts.models;
 
 import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Coordinate;
+import usantatecla.draughts.types.Error;
 
 class Turn {
 
@@ -39,6 +41,14 @@ class Turn {
 
   void movePiece(Coordinate origin, Coordinate target){
     this.getActivePlayer().movePiece(origin, target);
+  }
+
+  Error getOriginError(Coordinate coordinate) {
+    return this.getActivePlayer().getOriginError(coordinate);
+  }
+
+  Error getTargetError(Coordinate origin, Coordinate target) {
+    return this.getActivePlayer().getTargetError(origin, target);
   }
 
   /*Turn() {

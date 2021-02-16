@@ -1,6 +1,7 @@
 package usantatecla.draughts.models;
 
 import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Coordinate;
 import usantatecla.draughts.types.Error;
 
 import java.util.ArrayList;
@@ -25,8 +26,12 @@ public class Game {
 		this.turn.movePiece(origin, target);
 	}
 
-	public Error move(Coordinate... coordinates) {
+	Error getOriginError(Coordinate coordinate) {
+		return this.turn.getOriginError(coordinate);
+	}
 
+	public Error getTargetError(Coordinate origin, Coordinate target){
+		return this.turn.getTargetError(origin, target);
 	}
 
 	private Error isCorrectPairMove(int pair, Coordinate... coordinates) {

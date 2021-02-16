@@ -2,10 +2,13 @@ package usantatecla.draughts.models;
 
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Error;
+import usantatecla.draughts.types.Coordinate;
 
 import java.util.List;
 
 public abstract class Piece {
+
+	public static Piece NULL = NullPiece.getInstance();
 
 	protected Color color;
 	private static String[] CODES = {" w ", " b "};
@@ -27,6 +30,18 @@ public abstract class Piece {
 	}
 
 	abstract Error isCorrectDiagonalMovement(int amountBetweenDiagonalPieces, int pair, Coordinate... coordinates);
+
+	abstract boolean isNull();
+
+	Error getError(Coordinate origin, Coordinate target){
+		if(!this.isValidWay(origin, target)){
+			return Error.NOT_ADVANCED;
+		}
+
+		return Error.NULL;
+	}
+
+	abstract boolean isValidWay(Coordinate origin, Coordinate target);
 
 	boolean isLimit(Coordinate coordinate) {
 		return coordinate.isFirst() && this.getColor() == Color.WHITE

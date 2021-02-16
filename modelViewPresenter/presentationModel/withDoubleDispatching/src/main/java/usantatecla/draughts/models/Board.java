@@ -2,6 +2,7 @@ package usantatecla.draughts.models;
 
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Coordinate;
+import usantatecla.draughts.types.Error;
 import usantatecla.utils.models.Direction;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ class Board {
         this.pieces = new Piece[Coordinate.DIMENSION][Coordinate.DIMENSION];
         for (int i = 0; i < Coordinate.DIMENSION; i++)
             for (int j = 0; j < Coordinate.DIMENSION; j++)
-                this.pieces[i][j] = null;
+                this.pieces[i][j] = Piece.NULL;
     }
 
     void reset() {
@@ -24,8 +25,8 @@ class Board {
             for (int j = 0; j < Coordinate.DIMENSION; j++) {
                 Coordinate coordinate = new Coordinate(i, j);
                 Color color = Color.getInitialColor(coordinate);
-                Piece piece = null;
-                if (color != null)
+                Piece piece = Piece.NULL;
+                if (!color.isNull())
                     piece = new Pawn(color);
                 this.putPiece(coordinate, piece);
             }
@@ -47,29 +48,28 @@ class Board {
 
         this.pieces[coordinate.getRow()][coordinate.getColumn()] = piece;
     }
-
-    //TODO habría que crear un variable de coordenada auxiliar igualada a la de origen??
+    
     private void removePiecesInBetween(Coordinate origin, Coordinate target) {
         while (!origin.equals(target)) {
-            origin.coordinatesSum(origin.getOrthogonalVector(target));
-            this.pieces[origin.getRow()][origin.getColumn()] = null;
+            origin.sum(origin.getOrthogonalVector(target));
+            this.putPiece(origin, Piece.NULL);
         }
     }
 
     private Piece getPiece(Coordinate coordinate) {
-        assert coordinate != null;
+        assert !coordinate.isNull();
         return this.pieces[coordinate.getRow()][coordinate.getColumn()];
     }
 
     Color getColor(Coordinate coordinate) {
-        final Piece piece = this.getPiece(coordinate);
-        if (piece == null)
-            return null;
+        Piece piece = this.getPiece(coordinate);
+        if (piece.isNull())
+            return Color.NULL;
         return piece.getColor();
     }
 
     boolean isEmpty(Coordinate coordinate) {
-        return this.getPiece(coordinate) == null;
+        return this.getPiece(coordinate).isNull();
     }
 
     @Override
@@ -93,13 +93,32 @@ class Board {
         String string = " " + row;
         for (int j = 0; j < Coordinate.DIMENSION; j++) {
             Piece piece = this.getPiece(new Coordinate(row, j));
-            if (piece == null)
+            if (piece.isNull())
                 string += " ";
             else {
                 string += piece;
             }
         }
         return string + row + "\n";
+    }
+
+    Error getTargetError(Coordinate origin, Coordinate target) {
+
+        if(this.areColleaguePiecesInBetween(origin, target)){
+            return Error.COLLEAGUE_EATING;
+        }
+        return this.getPiece(origin).getError(origin, target);
+    }
+
+    private boolean areColleaguePiecesInBetween(Coordinate origin, Coordinate target) {
+        Coordinate coordinate = origin;
+        while (!coordinate.equals(target)) {
+            coordinate.sum(origin.getOrthogonalVector(target));
+            if(this.getColor(coordinate) == this.getColor(origin)){
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

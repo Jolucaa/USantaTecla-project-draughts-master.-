@@ -20,20 +20,10 @@ class Board {
     }
 
     void reset() {
-        for (int i = 0; i < Coordinate.DIMENSION; i+=2)
-            for (int j = 0; j < Coordinate.DIMENSION; j+=2) {
+        for (int i = 0; i < Coordinate.DIMENSION; i++)
+            for (int j = 0; j < Coordinate.DIMENSION; j++) {
                 Coordinate coordinate = new Coordinate(i, j);
-                Color color = Color.BLACK;
-                Piece piece = Piece.NULL;
-                if (!color.isNull())
-                    piece = new Pawn(color);
-                this.putPiece(coordinate, piece);
-            }
-
-            for (int i = 0; i < Coordinate.DIMENSION; i+=2)
-            for (int j = 0; j < Coordinate.DIMENSION; j+=2) {
-                Coordinate coordinate = new Coordinate(i, j);
-                Color color = Color.WHITE;
+                Color color = Color.getInitialColor(coordinate);
                 Piece piece = Piece.NULL;
                 if (!color.isNull())
                     piece = new Pawn(color);
@@ -65,7 +55,7 @@ class Board {
         }
     }
 
-    Piece getPiece(Coordinate coordinate) {
+    private Piece getPiece(Coordinate coordinate) {
         assert !coordinate.isNull();
         return this.pieces[coordinate.getRow()][coordinate.getColumn()];
     }

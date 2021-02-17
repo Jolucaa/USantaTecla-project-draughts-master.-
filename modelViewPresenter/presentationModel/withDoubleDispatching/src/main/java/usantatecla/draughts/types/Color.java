@@ -14,7 +14,7 @@ public enum Color {
         return Color.values()[ordinal];
     }
 
-    boolean isInitialRow(int row){
+    boolean isInitialRow(final int row){
         switch(this){
             case WHITE:
                 return row >= LIMITS[this.ordinal()];
@@ -22,6 +22,14 @@ public enum Color {
                 return row <= LIMITS[this.ordinal()];
         }
         return false;
+    }
+
+    public static Color getInitialColor(final Coordinate coordinate) {
+        if (coordinate.isBlack())
+            for(Color color : Color.values())
+                if (color.isInitialRow(coordinate.getRow()))
+                    return color;
+        return null;
     }
 
     public boolean isNull() {

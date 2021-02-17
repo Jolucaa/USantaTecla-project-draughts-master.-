@@ -1,7 +1,7 @@
 package usantatecla.utils.models;
 
 public class ConcreteCoordinate implements Coordinate {
-	
+
 	public static final String ROW = "Row: ";
 	public static final String COLUMN = "Column: ";
 	protected int row;
@@ -22,7 +22,7 @@ public class ConcreteCoordinate implements Coordinate {
 
 	@Override
 	public Direction getDirection(Coordinate coordinate) {
-		if (this.equals(coordinate)){
+		if (this.equals(coordinate)) {
 			return Direction.NULL;
 		}
 		if (this.inHorizontal(coordinate)) {
@@ -39,7 +39,7 @@ public class ConcreteCoordinate implements Coordinate {
 
 	@Override
 	public boolean inHorizontal(Coordinate coordinate) {
-		if (coordinate.isNull()){
+		if (coordinate.isNull()) {
 			return false;
 		}
 		return this.row == ((ConcreteCoordinate) coordinate).row;
@@ -47,7 +47,7 @@ public class ConcreteCoordinate implements Coordinate {
 
 	@Override
 	public boolean inVertical(Coordinate coordinate) {
-		if (coordinate.isNull()){
+		if (coordinate.isNull()) {
 			return false;
 		}
 		return this.column == ((ConcreteCoordinate) coordinate).column;
@@ -56,6 +56,19 @@ public class ConcreteCoordinate implements Coordinate {
 	@Override
 	public boolean inMainDiagonal() {
 		return this.row - this.column == 0;
+	}
+
+	public int getVerticalDistance(Coordinate coordinate) {
+		assert !coordinate.isNull();
+
+		return Math.abs(this.row - ((ConcreteCoordinate) coordinate).getRow());
+	}
+
+	public void sum(Coordinate coordinate) {
+		assert !coordinate.isNull();
+
+		this.row += ((ConcreteCoordinate) coordinate).getRow();
+		this.column += ((ConcreteCoordinate) coordinate).getColumn();
 	}
 
 	public int getRow() {

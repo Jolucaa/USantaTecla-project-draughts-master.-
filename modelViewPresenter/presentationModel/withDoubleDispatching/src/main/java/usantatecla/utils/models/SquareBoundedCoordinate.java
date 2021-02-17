@@ -53,6 +53,18 @@ public abstract class SquareBoundedCoordinate {
         return coordinate.getRow() + coordinate.getColumn() == this.getDimension() - 1;
     }
 
+    public int getVerticalDistance(SquareBoundedCoordinate coordinate) {
+		assert !adaptee.isNull();
+
+		return ((ConcreteCoordinate) this.adaptee).getVerticalDistance(new ConcreteCoordinate(coordinate.getRow(), coordinate.getColumn()));
+	}
+
+    public void sum(SquareBoundedCoordinate coordinate) {
+        assert !this.adaptee.isNull();
+
+        ((ConcreteCoordinate) this.adaptee).sum(new ConcreteCoordinate(coordinate.getRow(), coordinate.getColumn()));
+    }
+
     public void random() {
         Random random = new Random(System.currentTimeMillis());
         this.adaptee = new ConcreteCoordinate(random.nextInt(this.getDimension()), random.nextInt(this.getDimension()));

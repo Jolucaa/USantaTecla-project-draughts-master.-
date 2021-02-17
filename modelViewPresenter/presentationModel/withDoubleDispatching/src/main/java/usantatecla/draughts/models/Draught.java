@@ -2,8 +2,6 @@ package usantatecla.draughts.models;
 
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Coordinate;
-import usantatecla.draughts.types.Error;
-
 public class Draught extends Piece {
 
   Draught(Color color) {
@@ -11,15 +9,13 @@ public class Draught extends Piece {
   }
 
   @Override
-  Error isCorrectDiagonalMovement(int amountBetweenDiagonalPieces, int pair, Coordinate... coordinates) {
-    if (amountBetweenDiagonalPieces > 1)
-      return Error.TOO_MUCH_EATINGS;
-    return null;
+  protected boolean isTooFarMove(Coordinate origin, Coordinate target) {
+    return true;
   }
 
   @Override
-  boolean isNull() {
-    return false;
+  protected boolean isTooFarJump(Coordinate origin, Coordinate target) {
+    return true;
   }
 
   @Override
@@ -28,8 +24,13 @@ public class Draught extends Piece {
   }
 
   @Override
-  public String getCode(){
-		return super.getCode().toUpperCase();
+  public String getCode() {
+    return super.getCode().toUpperCase();
+  }
+
+  @Override
+  boolean isNull() {
+    return false;
   }
 
 }

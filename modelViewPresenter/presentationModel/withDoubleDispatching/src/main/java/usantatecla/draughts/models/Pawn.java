@@ -2,32 +2,25 @@ package usantatecla.draughts.models;
 
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Coordinate;
-import usantatecla.draughts.types.Error;
 
 public class Pawn extends Piece {
 
-    private static char[] CHARACTERS = {'b', 'n'};
-    private static final int MAX_DISTANCE = 2;
+    private static char[] CHARACTERS = { 'b', 'n' };
+    private static final int MAX_MOVE_DISTANCE = 1;
+    private static final int MAX_JUMP_DISTANCE = 2;
 
     Pawn(Color color) {
         super(color);
     }
 
     @Override
-    Error isCorrectDiagonalMovement(int amountBetweenDiagonalPieces, int pair, Coordinate... coordinates) {
-        if (!this.isAdvanced(coordinates[pair], coordinates[pair + 1]))
-            return Error.NOT_ADVANCED;
-        int distance = coordinates[pair].getDiagonalDistance(coordinates[pair + 1]);
-        if (distance > Pawn.MAX_DISTANCE)
-            return Error.TOO_MUCH_ADVANCED;
-        if (distance == Pawn.MAX_DISTANCE && amountBetweenDiagonalPieces != 1)
-            return Error.WITHOUT_EATING;
-        return null;
+    protected boolean isTooFarMove(Coordinate origin, Coordinate target) {
+        return origin.getVerticalDistance(target) > Pawn.MAX_MOVE_DISTANCE;
     }
 
     @Override
-    boolean isNull() {
-        return false;
+    protected boolean isTooFarJump(Coordinate origin, Coordinate target) {
+        return origin.getVerticalDistance(target) > Pawn.MAX_JUMP_DISTANCE;
     }
 
     @Override
@@ -38,6 +31,11 @@ public class Pawn extends Piece {
         } else if (this.color == Color.WHITE && orthogonalVector.getRow() == -1) {
             return true;
         }
+        return false;
+    }
+
+    @Override
+    boolean isNull() {
         return false;
     }
 

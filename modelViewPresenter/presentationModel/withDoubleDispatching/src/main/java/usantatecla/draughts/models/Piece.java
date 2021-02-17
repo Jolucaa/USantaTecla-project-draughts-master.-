@@ -4,8 +4,6 @@ import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Error;
 import usantatecla.draughts.types.Coordinate;
 
-import java.util.List;
-
 public abstract class Piece {
 
 	public static Piece NULL = NullPiece.getInstance();
@@ -18,44 +16,34 @@ public abstract class Piece {
 		this.color = color;
 	}
 
-	Error isCorrectMovement(List<Piece> betweenDiagonalPieces, int pair, Coordinate... coordinates){
-		assert coordinates[pair] != null;
-		assert coordinates[pair + 1] != null;
-		if (!coordinates[pair].isOnDiagonal(coordinates[pair + 1]))
-			return Error.NOT_DIAGONAL;
-		for(Piece piece : betweenDiagonalPieces)
-			if (this.color == piece.getColor())
-				return Error.COLLEAGUE_EATING;
-		return this.isCorrectDiagonalMovement(betweenDiagonalPieces.size(), pair, coordinates);
-	}
-
-	abstract Error isCorrectDiagonalMovement(int amountBetweenDiagonalPieces, int pair, Coordinate... coordinates);
-
 	abstract boolean isNull();
 
-	Error getError(Coordinate origin, Coordinate target){
-		if(!this.isValidWay(origin, target)){
-			return Error.NOT_ADVANCED;
+	Error getMoveTargetError(Coordinate origin, Coordinate target) {
+		if (this.isTooFarMove(origin, target)) {
+			return Error.TOO_FAR;
 		}
+		return getTargetError(origin, target);
+	}
 
+	protected abstract boolean isTooFarMove(Coordinate origin, Coordinate target);
+
+	Error getJumpTargetError(Coordinate origin, Coordinate target) {
+		if (this.isTooFarJump(origin, target)) {
+			return Error.TOO_FAR;
+		}
+		return getTargetError(origin, target);
+	}
+
+	protected abstract boolean isTooFarJump(Coordinate origin, Coordinate target);
+
+	private Error getTargetError(Coordinate origin, Coordinate target){
+		if(!this.isValidWay(origin, target)){
+			return Error.NOT_VALID_WAY;
+		}
 		return Error.NULL;
 	}
 
 	abstract boolean isValidWay(Coordinate origin, Coordinate target);
-
-	boolean isLimit(Coordinate coordinate) {
-		return coordinate.isFirst() && this.getColor() == Color.WHITE
-				|| coordinate.isLast() && this.getColor() == Color.BLACK;
-	}
-
-	boolean isAdvanced(Coordinate origin, Coordinate target) {
-		assert origin != null;
-		assert target != null;
-		int difference = origin.getRow() - target.getRow();
-		if (color == Color.WHITE)
-			return difference > 0;
-		return difference < 0;
-	}
 
 	public Color getColor() {
 		return this.color;

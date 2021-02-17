@@ -3,7 +3,6 @@ package usantatecla.draughts.models;
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Coordinate;
 import usantatecla.draughts.types.Error;
-import usantatecla.utils.models.Direction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,10 +20,20 @@ class Board {
     }
 
     void reset() {
-        for (int i = 0; i < Coordinate.DIMENSION; i++)
-            for (int j = 0; j < Coordinate.DIMENSION; j++) {
+        for (int i = 0; i < Coordinate.DIMENSION; i+=2)
+            for (int j = 0; j < Coordinate.DIMENSION; j+=2) {
                 Coordinate coordinate = new Coordinate(i, j);
-                Color color = Color.getInitialColor(coordinate);
+                Color color = Color.BLACK;
+                Piece piece = Piece.NULL;
+                if (!color.isNull())
+                    piece = new Pawn(color);
+                this.putPiece(coordinate, piece);
+            }
+
+            for (int i = 0; i < Coordinate.DIMENSION; i+=2)
+            for (int j = 0; j < Coordinate.DIMENSION; j+=2) {
+                Coordinate coordinate = new Coordinate(i, j);
+                Color color = Color.WHITE;
                 Piece piece = Piece.NULL;
                 if (!color.isNull())
                     piece = new Pawn(color);
@@ -56,7 +65,7 @@ class Board {
         }
     }
 
-    private Piece getPiece(Coordinate coordinate) {
+    Piece getPiece(Coordinate coordinate) {
         assert !coordinate.isNull();
         return this.pieces[coordinate.getRow()][coordinate.getColumn()];
     }
@@ -70,6 +79,53 @@ class Board {
 
     boolean isEmpty(Coordinate coordinate) {
         return this.getPiece(coordinate).isNull();
+    }
+
+    Error getTargetError(Coordinate origin, Coordinate target) {
+        if (this.areColleaguePiecesInBetween(origin, target)){
+            return Error.COLLEAGUE_EATING;
+        }
+        List<Piece> pieces = this.getPiecesInBetween(origin, target);
+        if (pieces.size() == 1) {
+            return this.getPiece(origin).getJumpTargetError(origin, target);
+        } else if (pieces.size() == 0) {
+            return this.getPiece(origin).getMoveTargetError(origin, target);
+        } else {
+            return Error.TOO_MUCH_EATINGS;
+        }
+    }
+
+    private boolean areColleaguePiecesInBetween(Coordinate origin, Coordinate target) {
+        Coordinate coordinate = origin;
+        while (!coordinate.equals(target)) {
+            coordinate.sum(origin.getOrthogonalVector(target));
+            if(this.getColor(coordinate) == this.getColor(origin)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<Piece> getPiecesInBetween(Coordinate origin, Coordinate target) {
+        List<Piece> pieces = new ArrayList<>();
+        Coordinate coordinate = origin;
+        while (!coordinate.equals(target)) {
+            coordinate.sum(origin.getOrthogonalVector(target));
+            pieces.add(this.getPiece(coordinate));
+        }
+        return pieces;
+    }
+
+    boolean isFinished(Color activeColor) {
+        for (int i = 0; i < Coordinate.DIMENSION; i++) {
+            for (int j = 0; j < Coordinate.DIMENSION; j++) {
+                Color color = this.getPiece(new Coordinate(i, j)).getColor();
+                if (color != activeColor && color != Color.NULL) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     @Override
@@ -100,25 +156,6 @@ class Board {
             }
         }
         return string + row + "\n";
-    }
-
-    Error getTargetError(Coordinate origin, Coordinate target) {
-
-        if(this.areColleaguePiecesInBetween(origin, target)){
-            return Error.COLLEAGUE_EATING;
-        }
-        return this.getPiece(origin).getError(origin, target);
-    }
-
-    private boolean areColleaguePiecesInBetween(Coordinate origin, Coordinate target) {
-        Coordinate coordinate = origin;
-        while (!coordinate.equals(target)) {
-            coordinate.sum(origin.getOrthogonalVector(target));
-            if(this.getColor(coordinate) == this.getColor(origin)){
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

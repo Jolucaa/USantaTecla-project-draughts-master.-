@@ -1,12 +1,15 @@
 package usantatecla.draughts.types;
 
+import usantatecla.utils.models.ClosedInterval;
+
 public enum Color {
 
     WHITE,
     BLACK,
     NULL;
 
-    private final int[] LIMITS = new int[]{5, 2};
+    static final ClosedInterval BLACK_ROWS_INTERVAL = new ClosedInterval(0,2);
+    static final ClosedInterval WHITE_ROWS_INTERVAL = new ClosedInterval(5,7);
 
     public static Color get(int ordinal) {
         assert ordinal >= 0 && ordinal < Color.NULL.ordinal();
@@ -14,22 +17,14 @@ public enum Color {
         return Color.values()[ordinal];
     }
 
-    boolean isInitialRow(final int row){
-        switch(this){
-            case WHITE:
-                return row >= LIMITS[this.ordinal()];
-            case BLACK:
-                return row <= LIMITS[this.ordinal()];
+    public static Color getInitialColor(Coordinate coordinate) {
+        if(coordinate.isInitialPiecePosition()) {
+            if (BLACK_ROWS_INTERVAL.isIncluded(coordinate.getRow()))
+                return Color.BLACK;
+            if (WHITE_ROWS_INTERVAL.isIncluded(coordinate.getRow()))
+                return Color.WHITE;
         }
-        return false;
-    }
-
-    public static Color getInitialColor(final Coordinate coordinate) {
-        if (coordinate.isBlack())
-            for(Color color : Color.values())
-                if (color.isInitialRow(coordinate.getRow()))
-                    return color;
-        return null;
+        return Color.NULL;
     }
 
     public boolean isNull() {

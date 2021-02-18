@@ -24,6 +24,10 @@ public class Coordinate extends SquareBoundedCoordinate {
 				(int) Math.signum(coordinate.getColumn() - this.getColumn()));
 	}
 
+    public boolean isInitialPiecePosition() {
+        return (this.getRow() + this.getColumn()) % 2 != 0;
+    }
+
     @Override
     protected int getDimension() {
         return Coordinate.DIMENSION;

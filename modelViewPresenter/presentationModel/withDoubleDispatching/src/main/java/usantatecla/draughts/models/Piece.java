@@ -36,6 +36,8 @@ public abstract class Piece {
 
 	protected abstract boolean isTooFarJump(Coordinate origin, Coordinate target);
 
+	protected abstract boolean isFinalRow(Coordinate coordinate);
+
 	private Error getTargetError(Coordinate origin, Coordinate target){
 		if(!this.isValidWay(origin, target)){
 			return Error.NOT_VALID_WAY;

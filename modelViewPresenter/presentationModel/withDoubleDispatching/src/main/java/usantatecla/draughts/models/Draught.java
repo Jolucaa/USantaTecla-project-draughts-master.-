@@ -19,6 +19,11 @@ public class Draught extends Piece {
   }
 
   @Override
+  protected boolean isFinalRow(Coordinate coordinate) {
+    return false;
+  }
+
+  @Override
   boolean isValidWay(Coordinate origin, Coordinate target) {
     return true;
   }

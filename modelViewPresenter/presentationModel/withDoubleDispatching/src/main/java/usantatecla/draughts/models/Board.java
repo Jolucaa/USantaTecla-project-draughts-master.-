@@ -14,21 +14,20 @@ class Board {
 
     Board() {
         this.pieces = new Piece[Coordinate.DIMENSION][Coordinate.DIMENSION];
-        for (int i = 0; i < Coordinate.DIMENSION; i++)
-            for (int j = 0; j < Coordinate.DIMENSION; j++)
-                this.pieces[i][j] = Piece.NULL;
+        this.reset();
     }
 
     void reset() {
-        for (int i = 0; i < Coordinate.DIMENSION; i++)
+        for (int i = 0; i < Coordinate.DIMENSION; i++) {
             for (int j = 0; j < Coordinate.DIMENSION; j++) {
-                Coordinate coordinate = new Coordinate(i, j);
-                Color color = Color.getInitialColor(coordinate);
+                Color color = Color.getInitialColor(new Coordinate(i, j));
                 Piece piece = Piece.NULL;
-                if (!color.isNull())
+                if (!color.isNull()) {
                     piece = new Pawn(color);
-                this.putPiece(coordinate, piece);
+                }
+                this.pieces[i][j] = piece;
             }
+        }
     }
 
     void movePiece(Coordinate origin, Coordinate target) {
@@ -38,6 +37,8 @@ class Board {
 
         Piece piece = this.getPiece(origin);
         this.putPiece(origin, Piece.NULL);
+        if(piece.isFinalRow(target))
+            piece = new Draught(piece.getColor());
         this.putPiece(target, piece);
         this.removePiecesInBetween(origin, target);
     }

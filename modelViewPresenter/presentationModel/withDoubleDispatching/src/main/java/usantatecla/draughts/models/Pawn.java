@@ -5,7 +5,6 @@ import usantatecla.draughts.types.Coordinate;
 
 public class Pawn extends Piece {
 
-    private static char[] CHARACTERS = { 'b', 'n' };
     private static final int MAX_MOVE_DISTANCE = 1;
     private static final int MAX_JUMP_DISTANCE = 2;
 
@@ -24,6 +23,14 @@ public class Pawn extends Piece {
     }
 
     @Override
+    protected boolean isFinalRow(Coordinate coordinate) {
+        assert !this.color.isNull();
+
+        return (this.color == Color.BLACK && coordinate.getRow() == 0) ||
+                (this.color == Color.WHITE && coordinate.getRow() == Coordinate.DIMENSION - 1);
+    }
+
+    @Override
     boolean isValidWay(Coordinate origin, Coordinate target) {
         Coordinate orthogonalVector = origin.getOrthogonalVector(target);
         if (this.color == Color.BLACK && orthogonalVector.getRow() == 1) {
@@ -37,10 +44,6 @@ public class Pawn extends Piece {
     @Override
     boolean isNull() {
         return false;
-    }
-
-    protected char[] getCodes() {
-        return Pawn.CHARACTERS;
     }
 
 }

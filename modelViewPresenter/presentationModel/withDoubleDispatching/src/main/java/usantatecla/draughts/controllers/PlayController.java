@@ -1,42 +1,47 @@
 package usantatecla.draughts.controllers;
 
-import usantatecla.draughts.models.Coordinate;
 import usantatecla.draughts.models.Game;
 import usantatecla.draughts.models.State;
 import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Coordinate;
 import usantatecla.draughts.types.Error;
 
-public class PlayController extends InteractorController {
+public class PlayController extends Controller {
 
-	private CancelController cancelController;
-	private MoveController moveController;
+    public PlayController(Game game, State state) {
+        super(game, state);
+    }
 
-	public PlayController(Game game, State state) {
-		super(game, state);
-		this.cancelController = new CancelController(game, state);
-		this.moveController = new MoveController(game, state);
-	}
+    public boolean isFinished() {
+        return this.game.isFinished();
+    }
 
-	public Error move(Coordinate... coordinates) {
-		return this.moveController.move(coordinates);
-	}
+    public void next() {
+        this.game.next();
+    }
 
-	public void cancel() {
-		this.cancelController.cancel();
-	}
+    public Color getActiveColor() {
+        return this.game.getActiveColor();
+    }
 
-	public Color getColor() {
-		return this.game.getTurnColor();
-	}
+    public void movePiece(Coordinate origin, Coordinate target) {
+        this.game.movePiece(
+                new Coordinate(origin.getRow(), origin.getColumn()),
+                new Coordinate(target.getRow(), target.getColumn())
+        );
+    }
 
-	public boolean isBlocked() {
-		return this.game.isBlocked();
-	}
+    public Error getOriginError(Coordinate coordinate) {
+        return this.game.getOriginError(coordinate);
+    }
 
-	@Override
-	public void accept(InteractorControllersVisitor interactorControllersVisitor) {
-		assert interactorControllersVisitor != null;
-		interactorControllersVisitor.visit(this);
-	}
+    public Error getTargetError(Coordinate origin, Coordinate target) {
+        return this.game.getTargetError(origin, target);
+    }
+
+    @Override
+    public void accept(ControllersVisitor controllersVisitor) {
+        controllersVisitor.visit(this);
+    }
 
 }

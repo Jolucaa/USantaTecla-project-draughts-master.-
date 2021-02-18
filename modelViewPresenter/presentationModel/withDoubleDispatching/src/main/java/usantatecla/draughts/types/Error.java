@@ -13,6 +13,7 @@ public enum Error {
     TOO_FAR,
     TOO_MUCH_EATINGS,
     TOO_MUCH_JUMPS,
+    BAD_FORMAT,
     NULL;
 
     public boolean isNull() {

@@ -3,7 +3,7 @@ package usantatecla.draughts.views.console;
 import usantatecla.draughts.types.Error;
 import usantatecla.utils.views.Console;
 
-public class ErrorView extends usantatecla.draughts.views.ErrorView {
+class ErrorView extends usantatecla.draughts.views.ErrorView {
 
     @Override
     public void writeln(Error error) {

@@ -9,22 +9,22 @@ import java.util.Map;
 
 public class Logic {
 
-	private Game game;
-	private State state;
-	private Map<StateValue, InteractorController> interactorControllers;
+    private Game game;
+    private State state;
+    private Map<StateValue, Controller> controllers;
 
-	public Logic() {
-		this.game = new Game();
-		this.state = new State();
-        this.interactorControllers = new HashMap<StateValue, InteractorController>();
-		this.interactorControllers.put(StateValue.INITIAL, new StartController(this.game, this.state));
-		this.interactorControllers.put(StateValue.IN_GAME, new PlayController(this.game, this.state));
-		this.interactorControllers.put(StateValue.FINAL, new ResumeController(this.game, this.state));
-		this.interactorControllers.put(StateValue.EXIT, null);
-	}
+    public Logic(Game game) {
+        this.state = new State();
+        this.game = game;
+        this.controllers = new HashMap<StateValue, Controller>();
+        this.controllers.put(StateValue.INITIAL, new StartController(this.game, this.state));
+        this.controllers.put(StateValue.IN_GAME, new PlayController(this.game, this.state));
+        this.controllers.put(StateValue.RESUME, new ResumeController(this.game, this.state));
+        this.controllers.put(StateValue.EXIT, null);
+    }
 
-	public InteractorController getController() {
-		return this.interactorControllers.get(this.state.getValueState());
+    public Controller getController() {
+        return this.controllers.get(this.state.getValueState());
     }
 
 }

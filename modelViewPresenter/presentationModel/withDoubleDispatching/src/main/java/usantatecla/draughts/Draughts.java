@@ -1,6 +1,7 @@
 package usantatecla.draughts;
 
 import usantatecla.draughts.controllers.Logic;
+import usantatecla.draughts.models.Game;
 import usantatecla.draughts.views.View;
 
 public abstract class Draughts {
@@ -9,7 +10,7 @@ public abstract class Draughts {
     private Logic logic;
 
     protected Draughts(){
-        this.logic = new Logic();
+        this.logic = new Logic(new Game());
         this.view = this.createView();
     }
 

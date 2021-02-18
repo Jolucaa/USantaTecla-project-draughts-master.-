@@ -27,6 +27,13 @@ public enum Color {
         return Color.NULL;
     }
 
+    public char getInitial() {
+        if(this.isNull()) {
+            return ' ';
+        }
+        return this.name().toLowerCase().charAt(0);
+    }
+
     public boolean isNull() {
         return this == Color.NULL;
     }

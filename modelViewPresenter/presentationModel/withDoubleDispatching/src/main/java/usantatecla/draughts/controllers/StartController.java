@@ -3,20 +3,15 @@ package usantatecla.draughts.controllers;
 import usantatecla.draughts.models.Game;
 import usantatecla.draughts.models.State;
 
-public class StartController extends InteractorController {
+public class StartController extends Controller {
 
-	public StartController(Game game, State state) {
+    public StartController(Game game, State state) {
         super(game, state);
-	}
+    }
 
-	public void start() {
-        this.state.next();
-	}
-    
     @Override
-	public void accept(InteractorControllersVisitor interactorControllersVisitor) {
-		assert interactorControllersVisitor != null;
-		interactorControllersVisitor.visit(this);
+    public void accept(ControllersVisitor controllersVisitor) {
+        controllersVisitor.visit(this);
     }
 
 }

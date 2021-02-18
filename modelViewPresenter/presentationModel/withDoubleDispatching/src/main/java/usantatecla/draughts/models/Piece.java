@@ -9,7 +9,6 @@ public abstract class Piece {
 	public static Piece NULL = NullPiece.getInstance();
 
 	protected Color color;
-	private static String[] CODES = {" w ", " b "};
 
 	Piece(Color color) {
 		assert color != null;
@@ -51,14 +50,15 @@ public abstract class Piece {
 		return this.color;
 	}
 
-	@Override
-	public String toString() {
-		return this.getCode();
+	public char getCode() {
+		return this.color.getInitial();
 	}
 
-	public String getCode(){
-		return Piece.CODES[this.color.ordinal()];
+	@Override
+	public String toString() {
+		return String.valueOf(this.getCode());
 	}
+
 
 	@Override
 	public int hashCode() {

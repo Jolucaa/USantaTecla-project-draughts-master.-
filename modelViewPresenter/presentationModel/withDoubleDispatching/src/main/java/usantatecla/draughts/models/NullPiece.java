@@ -33,6 +33,11 @@ public class NullPiece extends Piece{
     }
 
     @Override
+    protected boolean isFinalRow(Coordinate coordinate) {
+        return false;
+    }
+
+    @Override
     boolean isNull() {
         return true;
     }

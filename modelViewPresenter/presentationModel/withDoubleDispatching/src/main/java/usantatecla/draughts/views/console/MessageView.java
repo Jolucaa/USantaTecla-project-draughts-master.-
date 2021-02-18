@@ -2,21 +2,21 @@ package usantatecla.draughts.views.console;
 
 import usantatecla.draughts.views.Message;
 import usantatecla.utils.views.Console;
-//TODO Update messages
-public class MessageView {
 
-    public void writeln(Message message) {
+class MessageView {
+
+    void write(Message message) {
+        Console.getInstance().write(message.toString());
+    }
+
+    void writeln(Message message) {
         Console.getInstance().writeln(message.toString());
     }
 
-    public void writeln(Message message, int attempts) {
+    void writeln(Message message, String player) {
+        assert message == Message.PLAYER_WIN;
 
-        Console.getInstance().writeln(message.toString().replaceAll("#attempts", "" + attempts));
+        Console.getInstance().writeln(message.toString().replaceAll("#player", "" + player));
     }
-
-    public void writeln(Message message, int blacks, int whites) {
-
-        Console.getInstance().writeln(message.toString().replaceFirst("#blacks", "" + blacks).replaceFirst("#whites", "" + whites));
-    }
-
+    
 }

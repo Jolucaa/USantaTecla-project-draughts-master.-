@@ -3,25 +3,20 @@ package usantatecla.draughts.controllers;
 import usantatecla.draughts.models.Game;
 import usantatecla.draughts.models.State;
 
-public class ResumeController extends InteractorController {
+public class ResumeController extends Controller {
 
-	public ResumeController(Game game, State state) {
+    public ResumeController(Game game, State state) {
         super(game, state);
-	}
+    }
 
-	public void nextState() {
-        this.state.next();
-	}
-
-	public void reset() {
-		this.state.reset();
-		this.game.reset();
-	}
+    public void reset() {
+        this.game.reset();
+        this.state.reset();
+    }
 
     @Override
-	public void accept(InteractorControllersVisitor interactorControllersVisitor) {
-		assert interactorControllersVisitor != null;
-		interactorControllersVisitor.visit(this);
-	}
+    public void accept(ControllersVisitor controllersVisitor) {
+        controllersVisitor.visit(this);
+    }
 
 }

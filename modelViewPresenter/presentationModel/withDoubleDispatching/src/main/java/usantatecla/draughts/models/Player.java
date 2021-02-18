@@ -22,6 +22,7 @@ public class Player {
         this.board.movePiece(origin, target);
     }
 
+    // TODO Si la pieza no se puede mover (bloqueada por otros), otro error (no permitir esa coordenada de origen)
     Error getOriginError(Coordinate coordinate) {
         if (this.board.getColor(coordinate) != this.color) {
             return Error.NOT_OWNER;
@@ -36,10 +37,11 @@ public class Player {
         if (!this.board.isEmpty(target)) {
             return Error.NOT_EMPTY;
         }
+        // TODO Arreglar getDirection de SquareBounded
         Direction direction = origin.getDirection(target);
         if (direction != Direction.MAIN_DIAGONAL &&
                 direction != Direction.INVERSE_DIAGONAL) {
-            return Error.NOT_DIAGONAL;
+            //return Error.NOT_DIAGONAL;
         }
         return this.board.getTargetError(origin, target);
     }

@@ -1,29 +1,27 @@
 package usantatecla.draughts.controllers;
 
-import usantatecla.draughts.models.Coordinate;
 import usantatecla.draughts.models.Game;
 import usantatecla.draughts.models.State;
-import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Coordinate;
 
-public class Controller {
+public abstract class Controller {
 
     protected Game game;
     protected State state;
 
-    protected Controller(Game game, State state) {
-        assert game != null;
-        assert state != null;
+    Controller(Game game, State state) {
         this.game = game;
         this.state = state;
     }
 
-    public Color getColor(Coordinate coordinate) {
-        assert coordinate != null;
-        return this.game.getColor(coordinate);
+    public void nextState() {
+        this.state.next();
     }
 
-    public int getDimension() {
-        return this.game.getDimension();
+    public char getCode(Coordinate coordinate) {
+        return this.game.getCode(coordinate);
     }
+
+    public abstract void accept(ControllersVisitor controllersVisitor);
 
 }

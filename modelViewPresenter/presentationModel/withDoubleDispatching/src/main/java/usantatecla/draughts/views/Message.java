@@ -8,7 +8,14 @@ public enum Message {
     CANCEL_FORMAT("-1"),
     WINNER("You've won!!! ;-)"),
     LOST_MESSAGE("You've lost!!! :-("),
-    RESUME("Do you want to continue");
+    RESUME("Do you want to continue"),
+
+    VERTICAL_LINE(" | "),
+    ENTER_COORDINATE_TO_PUT("Enter a coordinate to put a token:"),
+    COORDINATE_TO_PUT("Coordinate to put"),
+    COORDINATE_TO_REMOVE("Origin coordinate to move"),
+    COORDINATE_TO_MOVE("Target coordinate to move"),
+    PLAYER_WIN("#player player: You win!!! :-)");
 
     private String message;
 

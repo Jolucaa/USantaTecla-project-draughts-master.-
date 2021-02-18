@@ -17,17 +17,14 @@ public class ConsoleView extends View {
         this.resumeView = new ResumeView();
     }
 
-    @Override
     public void visit(StartController startController) {
         this.startView.interact(startController);
     }
 
-    @Override
     public void visit(PlayController playController) {
         this.playView.interact(playController);
     }
 
-    @Override
     public boolean visit(ResumeController resumeController) {
         return this.resumeView.interact(resumeController);
     }

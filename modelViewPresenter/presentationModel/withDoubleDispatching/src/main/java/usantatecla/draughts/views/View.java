@@ -1,18 +1,18 @@
 package usantatecla.draughts.views;
 
-import usantatecla.draughts.controllers.InteractorController;
-import usantatecla.draughts.controllers.InteractorControllersVisitor;
+import usantatecla.draughts.controllers.Controller;
+import usantatecla.draughts.controllers.ControllersVisitor;
 import usantatecla.draughts.controllers.Logic;
 
-public abstract class View implements InteractorControllersVisitor {
+public abstract class View implements ControllersVisitor {
 
     public void interact(Logic logic) {
-        InteractorController interactorController;
+        Controller controller;
         do {
-            interactorController = logic.getController();
-            if (interactorController != null)
-                interactorController.accept(this);
-        } while (interactorController != null);
+            controller = logic.getController();
+            if (controller != null)
+                controller.accept(this);
+        } while (controller != null);
     }
 
 }

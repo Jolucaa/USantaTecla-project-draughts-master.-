@@ -50,22 +50,20 @@ class Board {
     }
     
     private void removePiecesInBetween(Coordinate origin, Coordinate target) {
+        origin.sum(origin.getOrthogonalVector(target));
         while (!origin.equals(target)) {
-            origin.sum(origin.getOrthogonalVector(target));
             this.putPiece(origin, Piece.NULL);
+            origin.sum(origin.getOrthogonalVector(target));
         }
     }
 
-    private Piece getPiece(Coordinate coordinate) {
+    Piece getPiece(Coordinate coordinate) {
         assert !coordinate.isNull();
         return this.pieces[coordinate.getRow()][coordinate.getColumn()];
     }
 
-    Color getColor(Coordinate coordinate) {
-        Piece piece = this.getPiece(coordinate);
-        if (piece.isNull())
-            return Color.NULL;
-        return piece.getColor();
+    char getCode(Coordinate coordinate) {
+        return this.getPiece(coordinate).getCode();
     }
 
     boolean isEmpty(Coordinate coordinate) {
@@ -87,7 +85,7 @@ class Board {
     }
 
     private boolean areColleaguePiecesInBetween(Coordinate origin, Coordinate target) {
-        Coordinate coordinate = origin;
+        Coordinate coordinate = new Coordinate(origin.getRow(), origin.getColumn());
         while (!coordinate.equals(target)) {
             coordinate.sum(origin.getOrthogonalVector(target));
             if(this.getColor(coordinate) == this.getColor(origin)){
@@ -97,12 +95,18 @@ class Board {
         return false;
     }
 
+    Color getColor(Coordinate coordinate) {
+        return this.getPiece(coordinate).getColor();
+    }
+
     private List<Piece> getPiecesInBetween(Coordinate origin, Coordinate target) {
         List<Piece> pieces = new ArrayList<>();
-        Coordinate coordinate = origin;
+        Coordinate coordinate = new Coordinate(origin.getRow(), origin.getColumn());
         while (!coordinate.equals(target)) {
             coordinate.sum(origin.getOrthogonalVector(target));
-            pieces.add(this.getPiece(coordinate));
+            if (this.getPiece(coordinate) != Piece.NULL) {
+                pieces.add(this.getPiece(coordinate));
+            }
         }
         return pieces;
     }

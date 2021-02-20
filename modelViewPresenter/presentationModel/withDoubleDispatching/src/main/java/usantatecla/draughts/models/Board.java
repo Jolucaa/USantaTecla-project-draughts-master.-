@@ -176,7 +176,7 @@ class Board {
         return true;
     }
 
-    //TODO Hacer
+    //TODO Hacer para el empate
     public boolean isBlocked(Color color) {
         return true;
     }

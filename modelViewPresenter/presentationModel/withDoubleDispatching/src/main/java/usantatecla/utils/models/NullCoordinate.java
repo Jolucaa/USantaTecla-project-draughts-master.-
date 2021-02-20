@@ -35,6 +35,11 @@ class NullCoordinate implements Coordinate {
     }
 
     @Override
+    public boolean inDiagonal(Coordinate coordinate) {
+        return false;
+    }
+
+    @Override
     public boolean inMainDiagonal() {
         return false;
     }

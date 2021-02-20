@@ -1,7 +1,11 @@
 package usantatecla.draughts.types;
 
+import usantatecla.utils.models.ClosedInterval;
 import usantatecla.utils.models.ConcreteCoordinate;
 import usantatecla.utils.models.SquareBoundedCoordinate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Coordinate extends SquareBoundedCoordinate {
 
@@ -26,6 +30,21 @@ public class Coordinate extends SquareBoundedCoordinate {
 
     public boolean isInitialPiecePosition() {
         return (this.getRow() + this.getColumn()) % 2 != 0;
+    }
+
+    //TODO Esto esta que da asco. Te pedimos perdon
+    public List<Coordinate> getDiagonalCoordinates(Coordinate orthogonalVector) {
+        List<Coordinate> diagonalCoordinates = new ArrayList<>();
+        Coordinate coordinate = new Coordinate(this.getRow(), this.getColumn());
+        int distance = 0;
+        ClosedInterval closedInterval = new ClosedInterval(0, Coordinate.DIMENSION-1);
+        while ((closedInterval.isIncluded(coordinate.getColumn()) && closedInterval.isIncluded(coordinate.getRow()))
+                && distance < 2) {
+            coordinate.sum(orthogonalVector);
+            distance++;
+            diagonalCoordinates.add(coordinate);
+        }
+        return diagonalCoordinates;
     }
 
     @Override

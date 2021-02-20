@@ -3,6 +3,7 @@ package usantatecla.draughts.models;
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Coordinate;
 import usantatecla.draughts.types.Error;
+import usantatecla.utils.models.ClosedInterval;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -172,6 +173,21 @@ class Board {
         Board other = (Board) obj;
         if (!Arrays.deepEquals(pieces, other.pieces))
             return false;
+        return true;
+    }
+
+    //TODO Hacer
+    public boolean isBlocked(Color color) {
+        return true;
+    }
+
+    public boolean isBlocked(Coordinate coordinate) {
+        Piece piece = this.getPiece(coordinate);
+        for (Coordinate coordinateDiagonal:piece.getDiagonalCoordinates(coordinate)) {
+            if (piece.getMoveTargetError(coordinate, coordinateDiagonal).isNull()) {
+                return false;
+            }
+        }
         return true;
     }
 

@@ -3,6 +3,9 @@ package usantatecla.draughts.models;
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Coordinate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Pawn extends Piece {
 
     private static final int MAX_MOVE_DISTANCE = 1;
@@ -39,6 +42,19 @@ public class Pawn extends Piece {
             return true;
         }
         return false;
+    }
+
+    @Override
+    protected List<Coordinate> getOrthogonalVectors () {
+        List<Coordinate> orthogonalVectors = new ArrayList<>();
+        if (this.color == Color.WHITE){
+            orthogonalVectors.add(new Coordinate(-1, -1));
+            orthogonalVectors.add( new Coordinate(-1, 1));
+        }else if (this.color == Color.BLACK) {
+            orthogonalVectors.add(new Coordinate(1, 1));
+            orthogonalVectors.add( new Coordinate(1, -1));
+        }
+        return orthogonalVectors;
     }
 
     @Override

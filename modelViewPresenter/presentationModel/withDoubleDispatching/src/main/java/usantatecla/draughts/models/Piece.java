@@ -4,6 +4,9 @@ import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Error;
 import usantatecla.draughts.types.Coordinate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Piece {
 
 	public static Piece NULL = NullPiece.getInstance();
@@ -45,6 +48,18 @@ public abstract class Piece {
 	}
 
 	abstract boolean isValidWay(Coordinate origin, Coordinate target);
+
+	List<Coordinate> getDiagonalCoordinates(Coordinate origin) {
+		List<Coordinate> diagonalCoordinates = new ArrayList<>();
+		for (Coordinate coordinate : this.getOrthogonalVectors()) {
+			for (Coordinate coordinateDiagonal:origin.getDiagonalCoordinates(coordinate)) {
+				diagonalCoordinates.add(coordinateDiagonal);
+			}
+		}
+		return diagonalCoordinates;
+	}
+	//TODO Revisar nombre
+	protected abstract List<Coordinate> getOrthogonalVectors();
 
 	public Color getColor() {
 		return this.color;

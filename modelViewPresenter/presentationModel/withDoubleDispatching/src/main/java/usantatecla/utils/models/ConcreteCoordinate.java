@@ -34,6 +34,9 @@ public class ConcreteCoordinate implements Coordinate {
 		if (this.inMainDiagonal() && coordinate.inMainDiagonal()) {
 			return Direction.MAIN_DIAGONAL;
 		}
+		if (this.inDiagonal(coordinate)) {
+			return Direction.DIAGONAL;
+		}
 		return Direction.NULL;
 	}
 
@@ -53,6 +56,12 @@ public class ConcreteCoordinate implements Coordinate {
 		return this.column == ((ConcreteCoordinate) coordinate).column;
 	}
 
+	//TODO Revisar
+	@Override
+	public boolean inDiagonal(Coordinate coordinate) {
+		return getVerticalDistance(coordinate) == getHorizontalDistance(coordinate);
+	}
+
 	@Override
 	public boolean inMainDiagonal() {
 		return this.row - this.column == 0;
@@ -62,6 +71,12 @@ public class ConcreteCoordinate implements Coordinate {
 		assert !coordinate.isNull();
 
 		return Math.abs(this.row - ((ConcreteCoordinate) coordinate).getRow());
+	}
+
+	public int getHorizontalDistance(Coordinate coordinate) {
+		assert !coordinate.isNull();
+
+		return Math.abs(this.column - ((ConcreteCoordinate) coordinate).getColumn());
 	}
 
 	public void sum(Coordinate coordinate) {

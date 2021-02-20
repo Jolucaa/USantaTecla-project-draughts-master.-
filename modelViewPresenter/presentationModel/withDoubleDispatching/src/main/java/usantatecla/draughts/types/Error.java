@@ -14,6 +14,7 @@ public enum Error {
     TOO_MUCH_EATINGS,
     TOO_MUCH_JUMPS,
     BAD_FORMAT,
+    BLOCKED_PIECE,
     NULL;
 
     public boolean isNull() {

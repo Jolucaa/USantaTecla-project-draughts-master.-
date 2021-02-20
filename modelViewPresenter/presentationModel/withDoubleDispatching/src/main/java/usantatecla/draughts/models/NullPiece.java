@@ -2,6 +2,10 @@ package usantatecla.draughts.models;
 
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Coordinate;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class NullPiece extends Piece{
 
     private static NullPiece instance;
@@ -20,6 +24,11 @@ public class NullPiece extends Piece{
     @Override
     boolean isValidWay(Coordinate origin, Coordinate target) {
         return false;
+    }
+
+    @Override
+    protected List<Coordinate> getOrthogonalVectors() {
+        return new ArrayList<>();
     }
 
     @Override

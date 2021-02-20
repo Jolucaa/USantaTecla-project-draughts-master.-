@@ -27,6 +27,9 @@ public class Player {
         if (this.board.getColor(coordinate) != this.color) {
             return Error.NOT_OWNER;
         }
+        if (this.board.isBlocked(coordinate)) {
+            return Error.BLOCKED_PIECE;
+        }
         return Error.NULL;
     }
 
@@ -37,11 +40,10 @@ public class Player {
         if (!this.board.isEmpty(target)) {
             return Error.NOT_EMPTY;
         }
-        // TODO Arreglar getDirection de SquareBounded
         Direction direction = origin.getDirection(target);
         if (direction != Direction.MAIN_DIAGONAL &&
-                direction != Direction.INVERSE_DIAGONAL) {
-            //return Error.NOT_DIAGONAL;
+                direction != Direction.INVERSE_DIAGONAL && direction != Direction.DIAGONAL) {
+            return Error.NOT_DIAGONAL;
         }
         return this.board.getTargetError(origin, target);
     }

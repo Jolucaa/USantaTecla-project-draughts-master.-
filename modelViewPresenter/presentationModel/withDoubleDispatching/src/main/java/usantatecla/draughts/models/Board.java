@@ -184,7 +184,7 @@ class Board {
     public boolean isBlocked(Coordinate coordinate) {
         Piece piece = this.getPiece(coordinate);
         for (Coordinate coordinateDiagonal:piece.getDiagonalCoordinates(coordinate)) {
-            if (piece.getMoveTargetError(coordinate, coordinateDiagonal).isNull()) {
+            if (this.getTargetError(coordinate, coordinateDiagonal).isNull()) {
                 return false;
             }
         }

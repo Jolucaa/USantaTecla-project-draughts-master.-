@@ -29,19 +29,15 @@ public class Pawn extends Piece {
     protected boolean isFinalRow(Coordinate coordinate) {
         assert !this.color.isNull();
 
-        return (this.color == Color.BLACK && coordinate.getRow() == 0) ||
-                (this.color == Color.WHITE && coordinate.getRow() == Coordinate.DIMENSION - 1);
+        return (this.color == Color.WHITE && coordinate.getRow() == 0) ||
+                (this.color == Color.BLACK && coordinate.getRow() == Coordinate.DIMENSION - 1);
     }
 
     @Override
     boolean isValidWay(Coordinate origin, Coordinate target) {
         Coordinate orthogonalVector = origin.getOrthogonalVector(target);
-        if (this.color == Color.BLACK && orthogonalVector.getRow() == 1) {
-            return true;
-        } else if (this.color == Color.WHITE && orthogonalVector.getRow() == -1) {
-            return true;
-        }
-        return false;
+        return (this.color == Color.BLACK && orthogonalVector.getRow() == 1) ||
+                (this.color == Color.WHITE && orthogonalVector.getRow() == -1);
     }
 
     @Override

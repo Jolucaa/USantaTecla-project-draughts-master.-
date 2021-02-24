@@ -38,11 +38,11 @@ public class Coordinate extends SquareBoundedCoordinate {
         Coordinate coordinate = new Coordinate(this.getRow(), this.getColumn());
         int distance = 0;
         ClosedInterval closedInterval = new ClosedInterval(0, Coordinate.DIMENSION-1);
-        while ((closedInterval.isIncluded(coordinate.getColumn()) && closedInterval.isIncluded(coordinate.getRow()))
-                && distance < 2) {
+        while (distance < 2) {
             coordinate.sum(orthogonalVector);
             distance++;
-            diagonalCoordinates.add(coordinate);
+            if(closedInterval.isIncluded(coordinate.getColumn()) && closedInterval.isIncluded(coordinate.getRow()))
+                diagonalCoordinates.add(new Coordinate(coordinate.getRow(), coordinate.getColumn()));
         }
         return diagonalCoordinates;
     }

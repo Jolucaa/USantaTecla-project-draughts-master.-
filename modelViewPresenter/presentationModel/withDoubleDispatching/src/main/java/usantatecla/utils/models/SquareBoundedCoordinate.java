@@ -59,7 +59,7 @@ public abstract class SquareBoundedCoordinate {
 		return ((ConcreteCoordinate) this.adaptee).getVerticalDistance(new ConcreteCoordinate(coordinate.getRow(), coordinate.getColumn()));
 	}
 
-    public void sum(SquareBoundedCoordinate coordinate) {
+    public void sum(ConcreteCoordinate coordinate) {
         assert !this.adaptee.isNull();
 
         ((ConcreteCoordinate) this.adaptee).sum(new ConcreteCoordinate(coordinate.getRow(), coordinate.getColumn()));

@@ -37,7 +37,7 @@ public class Game {
 	}
 
 	public boolean isFinished() {
-		return this.board.isFinished(this.getActiveColor());
+		return this.board.isWinner(this.getActiveColor());
 	}
 
 	public Color getActiveColor() {

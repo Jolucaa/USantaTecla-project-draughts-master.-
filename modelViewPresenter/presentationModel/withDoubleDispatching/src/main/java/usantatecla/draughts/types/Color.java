@@ -34,6 +34,15 @@ public enum Color {
         return this.name().toLowerCase().charAt(0);
     }
 
+    public Color opposite() {
+        assert !this.isNull();
+
+		if(this.equals(Color.BLACK)){
+            return Color.WHITE;
+        }
+        return Color.BLACK;
+	}
+
     public boolean isNull() {
         return this == Color.NULL;
     }

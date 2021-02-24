@@ -37,9 +37,6 @@ public class Player {
         if (origin.equals(target)) {
             return Error.SAME_COORDINATES;
         }
-        if (!this.board.isEmpty(target)) {
-            return Error.NOT_EMPTY;
-        }
         Direction direction = origin.getDirection(target);
         if (direction != Direction.MAIN_DIAGONAL &&
                 direction != Direction.INVERSE_DIAGONAL && direction != Direction.DIAGONAL) {

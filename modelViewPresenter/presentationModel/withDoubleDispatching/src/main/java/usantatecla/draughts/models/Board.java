@@ -3,7 +3,6 @@ package usantatecla.draughts.models;
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Coordinate;
 import usantatecla.draughts.types.Error;
-import usantatecla.utils.models.ClosedInterval;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,17 +43,18 @@ class Board {
         this.removePiecesInBetween(origin, target);
     }
 
-    private void putPiece(Coordinate coordinate, Piece piece) {
+    void putPiece(Coordinate coordinate, Piece piece) {
         assert !coordinate.isNull();
 
         this.pieces[coordinate.getRow()][coordinate.getColumn()] = piece;
     }
     
     private void removePiecesInBetween(Coordinate origin, Coordinate target) {
-        origin.sum(origin.getOrthogonalVector(target));
-        while (!origin.equals(target)) {
-            this.putPiece(origin, Piece.NULL);
-            origin.sum(origin.getOrthogonalVector(target));
+        Coordinate coordinate = new Coordinate(origin.getRow(), origin.getColumn());
+        coordinate.sum(origin.getOrthogonalVector(target));
+        while (!coordinate.equals(target)) {
+            this.putPiece(coordinate, Piece.NULL);
+            coordinate.sum(origin.getOrthogonalVector(target));
         }
     }
 
@@ -72,6 +72,9 @@ class Board {
     }
 
     Error getTargetError(Coordinate origin, Coordinate target) {
+        if (!this.isEmpty(target)) {
+            return Error.NOT_EMPTY;
+        }
         if (this.areColleaguePiecesInBetween(origin, target)){
             return Error.COLLEAGUE_EATING;
         }
@@ -113,11 +116,30 @@ class Board {
     }
 
     boolean isFinished(Color activeColor) {
+        return this.isWinner(activeColor) ||
+         (this.isBlocked(activeColor) && this.isBlocked(activeColor.opposite()));
+    }
+
+    boolean isWinner(Color activeColor) {
         for (int i = 0; i < Coordinate.DIMENSION; i++) {
             for (int j = 0; j < Coordinate.DIMENSION; j++) {
                 Color color = this.getPiece(new Coordinate(i, j)).getColor();
                 if (color != activeColor && color != Color.NULL) {
                     return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isBlocked(Color color) {
+        for (int i = 0; i < Coordinate.DIMENSION; i++) {
+            for (int j = 0; j < Coordinate.DIMENSION; j++) {
+                Coordinate coordinate = new Coordinate(i, j);
+                if (!this.getPiece(coordinate).isNull()) {
+                    if (!this.isBlocked(coordinate)) {
+                        return false;
+                    }
                 }
             }
         }
@@ -173,11 +195,6 @@ class Board {
         Board other = (Board) obj;
         if (!Arrays.deepEquals(pieces, other.pieces))
             return false;
-        return true;
-    }
-
-    //TODO Hacer para el empate
-    public boolean isBlocked(Color color) {
         return true;
     }
 

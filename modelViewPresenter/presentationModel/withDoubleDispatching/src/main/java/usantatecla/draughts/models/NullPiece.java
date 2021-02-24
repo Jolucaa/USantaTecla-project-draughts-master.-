@@ -1,10 +1,11 @@
 package usantatecla.draughts.models;
 
-import usantatecla.draughts.types.Color;
-import usantatecla.draughts.types.Coordinate;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Coordinate;
+import usantatecla.utils.models.ConcreteCoordinate;
 
 public class NullPiece extends Piece{
 
@@ -27,7 +28,7 @@ public class NullPiece extends Piece{
     }
 
     @Override
-    protected List<Coordinate> getOrthogonalVectors() {
+    protected List<ConcreteCoordinate> getOrthogonalVectors() {
         return new ArrayList<>();
     }
 

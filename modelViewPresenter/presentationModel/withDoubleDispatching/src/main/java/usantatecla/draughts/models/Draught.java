@@ -1,10 +1,11 @@
 package usantatecla.draughts.models;
 
-import usantatecla.draughts.types.Color;
-import usantatecla.draughts.types.Coordinate;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Coordinate;
+import usantatecla.utils.models.ConcreteCoordinate;
 
 public class Draught extends Piece {
 
@@ -14,12 +15,12 @@ public class Draught extends Piece {
 
     @Override
     protected boolean isTooFarMove(Coordinate origin, Coordinate target) {
-        return true;
+        return false;
     }
 
     @Override
     protected boolean isTooFarJump(Coordinate origin, Coordinate target) {
-        return true;
+        return false;
     }
 
     @Override
@@ -33,12 +34,12 @@ public class Draught extends Piece {
     }
 
     @Override
-    protected List<Coordinate> getOrthogonalVectors() {
-        List<Coordinate> orthogonalVectors = new ArrayList<>();
-        orthogonalVectors.add(new Coordinate(-1, -1));
-        orthogonalVectors.add(new Coordinate(-1, 1));
-        orthogonalVectors.add(new Coordinate(1, 1));
-        orthogonalVectors.add(new Coordinate(1, -1));
+    protected List<ConcreteCoordinate> getOrthogonalVectors() {
+        List<ConcreteCoordinate> orthogonalVectors = new ArrayList<>();
+        orthogonalVectors.add(new ConcreteCoordinate(-1, -1));
+        orthogonalVectors.add(new ConcreteCoordinate(-1, 1));
+        orthogonalVectors.add(new ConcreteCoordinate(1, 1));
+        orthogonalVectors.add(new ConcreteCoordinate(1, -1));
         return orthogonalVectors;
     }
 

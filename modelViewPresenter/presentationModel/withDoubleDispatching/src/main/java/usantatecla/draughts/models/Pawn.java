@@ -1,10 +1,11 @@
 package usantatecla.draughts.models;
 
-import usantatecla.draughts.types.Color;
-import usantatecla.draughts.types.Coordinate;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Coordinate;
+import usantatecla.utils.models.ConcreteCoordinate;
 
 public class Pawn extends Piece {
 
@@ -35,20 +36,20 @@ public class Pawn extends Piece {
 
     @Override
     boolean isValidWay(Coordinate origin, Coordinate target) {
-        Coordinate orthogonalVector = origin.getOrthogonalVector(target);
+        ConcreteCoordinate orthogonalVector = origin.getOrthogonalVector(target);
         return (this.color == Color.BLACK && orthogonalVector.getRow() == 1) ||
                 (this.color == Color.WHITE && orthogonalVector.getRow() == -1);
     }
 
     @Override
-    protected List<Coordinate> getOrthogonalVectors () {
-        List<Coordinate> orthogonalVectors = new ArrayList<>();
+    protected List<ConcreteCoordinate> getOrthogonalVectors () {
+        List<ConcreteCoordinate> orthogonalVectors = new ArrayList<>();
         if (this.color == Color.WHITE){
-            orthogonalVectors.add(new Coordinate(-1, -1));
-            orthogonalVectors.add( new Coordinate(-1, 1));
+            orthogonalVectors.add(new ConcreteCoordinate(-1, -1));
+            orthogonalVectors.add( new ConcreteCoordinate(-1, 1));
         }else if (this.color == Color.BLACK) {
-            orthogonalVectors.add(new Coordinate(1, 1));
-            orthogonalVectors.add( new Coordinate(1, -1));
+            orthogonalVectors.add(new ConcreteCoordinate(1, 1));
+            orthogonalVectors.add( new ConcreteCoordinate(1, -1));
         }
         return orthogonalVectors;
     }

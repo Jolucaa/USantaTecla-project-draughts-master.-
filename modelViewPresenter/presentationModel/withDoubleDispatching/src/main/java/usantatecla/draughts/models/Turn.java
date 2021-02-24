@@ -26,7 +26,7 @@ class Turn {
   }
 
   void next() {
-    if (!this.board.isFinished(this.getActiveColor())) {
+    if (!this.board.isWinner(this.getActiveColor())) {
       this.activePlayer = (this.activePlayer + 1) % Turn.NUMBER_PLAYERS;
     }
   }

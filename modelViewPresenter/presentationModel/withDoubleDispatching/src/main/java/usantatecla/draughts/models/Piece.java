@@ -1,11 +1,12 @@
 package usantatecla.draughts.models;
 
-import usantatecla.draughts.types.Color;
-import usantatecla.draughts.types.Error;
-import usantatecla.draughts.types.Coordinate;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Coordinate;
+import usantatecla.draughts.types.Error;
+import usantatecla.utils.models.ConcreteCoordinate;
 
 public abstract class Piece {
 
@@ -51,15 +52,15 @@ public abstract class Piece {
 
 	List<Coordinate> getDiagonalCoordinates(Coordinate origin) {
 		List<Coordinate> diagonalCoordinates = new ArrayList<>();
-		for (Coordinate coordinate : this.getOrthogonalVectors()) {
-			for (Coordinate coordinateDiagonal:origin.getDiagonalCoordinates(coordinate)) {
+		for (ConcreteCoordinate coordinate : this.getOrthogonalVectors()) {
+			for (Coordinate coordinateDiagonal : origin.getDiagonalCoordinates(coordinate)) {
 				diagonalCoordinates.add(coordinateDiagonal);
 			}
 		}
 		return diagonalCoordinates;
 	}
-	//TODO Revisar nombre
-	protected abstract List<Coordinate> getOrthogonalVectors();
+
+	protected abstract List<ConcreteCoordinate> getOrthogonalVectors();
 
 	public Color getColor() {
 		return this.color;

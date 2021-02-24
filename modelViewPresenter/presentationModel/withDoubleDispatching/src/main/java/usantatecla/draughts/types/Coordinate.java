@@ -1,6 +1,5 @@
 package usantatecla.draughts.types;
 
-import usantatecla.utils.models.ClosedInterval;
 import usantatecla.utils.models.ConcreteCoordinate;
 import usantatecla.utils.models.SquareBoundedCoordinate;
 
@@ -23,8 +22,8 @@ public class Coordinate extends SquareBoundedCoordinate {
         super(concreteCoordinate);
     }
 
-    public Coordinate getOrthogonalVector(Coordinate coordinate) {
-		return new Coordinate((int) Math.signum(coordinate.getRow() - this.getRow()),
+    public ConcreteCoordinate getOrthogonalVector(Coordinate coordinate) {
+		return new ConcreteCoordinate((int) Math.signum(coordinate.getRow() - this.getRow()),
 				(int) Math.signum(coordinate.getColumn() - this.getColumn()));
 	}
 
@@ -32,16 +31,15 @@ public class Coordinate extends SquareBoundedCoordinate {
         return (this.getRow() + this.getColumn()) % 2 != 0;
     }
 
-    //TODO Esto esta que da asco. Te pedimos perdon
-    public List<Coordinate> getDiagonalCoordinates(Coordinate orthogonalVector) {
+    //TODO Esto esta que da asco. Te pedimos perdon :(
+    public List<Coordinate> getDiagonalCoordinates(ConcreteCoordinate orthogonalVector) {
         List<Coordinate> diagonalCoordinates = new ArrayList<>();
         Coordinate coordinate = new Coordinate(this.getRow(), this.getColumn());
         int distance = 0;
-        ClosedInterval closedInterval = new ClosedInterval(0, Coordinate.DIMENSION-1);
         while (distance < 2) {
             coordinate.sum(orthogonalVector);
             distance++;
-            if(closedInterval.isIncluded(coordinate.getColumn()) && closedInterval.isIncluded(coordinate.getRow()))
+            if(coordinate.isValid())
                 diagonalCoordinates.add(new Coordinate(coordinate.getRow(), coordinate.getColumn()));
         }
         return diagonalCoordinates;

@@ -22,7 +22,6 @@ public class Player {
         this.board.movePiece(origin, target);
     }
 
-    // TODO Si la pieza no se puede mover (bloqueada por otros), otro error (no permitir esa coordenada de origen)
     Error getOriginError(Coordinate coordinate) {
         if (this.board.getColor(coordinate) != this.color) {
             return Error.NOT_OWNER;
@@ -45,7 +44,7 @@ public class Player {
         return this.board.getTargetError(origin, target);
     }
 
-	public Color getColor() {
+	Color getColor() {
 		return this.color;
 	}
 

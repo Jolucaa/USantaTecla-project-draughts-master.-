@@ -31,7 +31,7 @@ public class Coordinate extends SquareBoundedCoordinate {
         return (this.getRow() + this.getColumn()) % 2 != 0;
     }
 
-    //TODO Esto esta que da asco. Te pedimos perdon :(
+    //TODO Esto esta que da asco. Te pedimos perdon :`(
     public List<Coordinate> getDiagonalCoordinates(ConcreteCoordinate orthogonalVector) {
         List<Coordinate> diagonalCoordinates = new ArrayList<>();
         Coordinate coordinate = new Coordinate(this.getRow(), this.getColumn());
@@ -66,6 +66,11 @@ public class Coordinate extends SquareBoundedCoordinate {
                 return false;
         }
         return true;
+    }
+
+    @Override
+    public Coordinate clone() {
+        return new Coordinate(this.getRow(), this.getColumn());
     }
 
 }

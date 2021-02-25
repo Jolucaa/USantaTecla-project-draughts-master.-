@@ -16,6 +16,10 @@ public class PlayController extends Controller {
         return this.game.isFinished();
     }
 
+    public boolean isWinner() {
+        return this.game.isWinner();
+    }
+
     public void next() {
         this.game.next();
     }

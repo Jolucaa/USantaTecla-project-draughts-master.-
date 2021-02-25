@@ -100,5 +100,20 @@ public class BoardTest {
         assertThat(board.isBlocked(Color.WHITE), is(true));
         assertThat(board.isBlocked(Color.BLACK), is(true));
     }
+
+    @Test
+    public void testGivenBoardWhenWinThenTrue() {
+        Board board = new BoardBuilder().rows(
+            "        ",
+            "        ",
+            "        ",
+            "        ",
+            "        ",
+            "        ",
+            " B      ",
+            "        "
+        ).build();
+        assertThat(board.isWinner(Color.BLACK), is(true));
+    }
     
 }

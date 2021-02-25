@@ -11,7 +11,11 @@ class PlayView {
             playController.next();
             new BoardView().write(playController);
         } while (!playController.isFinished());
-        new MessageView().writeln(Message.PLAYER_WIN, playController.getActiveColor().name());
+        Message message = Message.DRAW;
+        if (playController.isWinner()){
+            message = Message.PLAYER_WIN;
+        }
+        new MessageView().writeln(message);
         playController.nextState();
     }
 

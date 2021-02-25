@@ -32,11 +32,16 @@ public class Game {
 	}
 
 	public char getCode(Coordinate coordinate) {
-		assert coordinate != null;
+		assert !coordinate.isNull();
+
 		return this.board.getCode(coordinate);
 	}
 
 	public boolean isFinished() {
+		return this.board.isFinished(this.getActiveColor());
+	}
+
+	public boolean isWinner() {
 		return this.board.isWinner(this.getActiveColor());
 	}
 
@@ -44,24 +49,11 @@ public class Game {
 		return this.turn.getActiveColor();
 	}
 
-	public Piece getPiece(Coordinate coordinate) {
-		assert coordinate != null;
-		return this.board.getPiece(coordinate);
-	}
-
 	public void next() {
 		this.turn.next();
 	}
 
-	public int getDimension() {
-		return Coordinate.DIMENSION;
-	}
-
-	@Override
-	public String toString() {
-		return this.board + "\n" + this.turn;
-	}
-
+	//TODO Dejar el hashCode??
 	@Override
 	public int hashCode() {
 		final int prime = 31;

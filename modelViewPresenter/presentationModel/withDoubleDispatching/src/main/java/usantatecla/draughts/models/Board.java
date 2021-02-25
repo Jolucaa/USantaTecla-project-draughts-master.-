@@ -43,14 +43,20 @@ class Board {
         this.removePiecesInBetween(origin, target);
     }
 
+    
+    boolean isEmpty(Coordinate coordinate) {
+        return this.getPiece(coordinate).isNull();
+    }
+
     void putPiece(Coordinate coordinate, Piece piece) {
         assert !coordinate.isNull();
 
         this.pieces[coordinate.getRow()][coordinate.getColumn()] = piece;
     }
     
+    //TODO Como ahorrarnos poner 2 veces el sum
     private void removePiecesInBetween(Coordinate origin, Coordinate target) {
-        Coordinate coordinate = new Coordinate(origin.getRow(), origin.getColumn());
+        Coordinate coordinate = origin.clone();
         coordinate.sum(origin.getOrthogonalVector(target));
         while (!coordinate.equals(target)) {
             this.putPiece(coordinate, Piece.NULL);
@@ -60,15 +66,12 @@ class Board {
 
     Piece getPiece(Coordinate coordinate) {
         assert !coordinate.isNull();
+
         return this.pieces[coordinate.getRow()][coordinate.getColumn()];
     }
 
     char getCode(Coordinate coordinate) {
         return this.getPiece(coordinate).getCode();
-    }
-
-    boolean isEmpty(Coordinate coordinate) {
-        return this.getPiece(coordinate).isNull();
     }
 
     Error getTargetError(Coordinate origin, Coordinate target) {
@@ -89,10 +92,9 @@ class Board {
     }
 
     private boolean areColleaguePiecesInBetween(Coordinate origin, Coordinate target) {
-        Coordinate coordinate = new Coordinate(origin.getRow(), origin.getColumn());
-        while (!coordinate.equals(target)) {
-            coordinate.sum(origin.getOrthogonalVector(target));
-            if(this.getColor(coordinate) == this.getColor(origin)){
+        List<Piece> pieces = this.getPiecesInBetween(origin, target);
+        for (Piece piece : pieces) {
+            if(piece.getColor() == this.getColor(origin)){
                 return true;
             }
         }
@@ -103,14 +105,16 @@ class Board {
         return this.getPiece(coordinate).getColor();
     }
 
+    //TODO lo mismo de arriba
     private List<Piece> getPiecesInBetween(Coordinate origin, Coordinate target) {
         List<Piece> pieces = new ArrayList<>();
-        Coordinate coordinate = new Coordinate(origin.getRow(), origin.getColumn());
+        Coordinate coordinate = origin.clone();
+        coordinate.sum(origin.getOrthogonalVector(target));
         while (!coordinate.equals(target)) {
-            coordinate.sum(origin.getOrthogonalVector(target));
-            if (this.getPiece(coordinate) != Piece.NULL) {
+            if (!this.isEmpty(coordinate)) {
                 pieces.add(this.getPiece(coordinate));
             }
+            coordinate.sum(origin.getOrthogonalVector(target));
         }
         return pieces;
     }
@@ -136,44 +140,22 @@ class Board {
         for (int i = 0; i < Coordinate.DIMENSION; i++) {
             for (int j = 0; j < Coordinate.DIMENSION; j++) {
                 Coordinate coordinate = new Coordinate(i, j);
-                if (!this.getPiece(coordinate).isNull()) {
-                    if (!this.isBlocked(coordinate)) {
-                        return false;
-                    }
+                if (!this.isEmpty(coordinate) && !this.isBlocked(coordinate)) {
+                    return false;
                 }
             }
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        String string = "";
-        string += this.toStringHorizontalNumbers();
-        for (int i = 0; i < Coordinate.DIMENSION; i++)
-            string += this.toStringHorizontalPiecesWithNumbers(i);
-        string += this.toStringHorizontalNumbers();
-        return string;
-    }
-
-    private String toStringHorizontalNumbers() {
-        String string = " ";
-        for (int j = 0; j < Coordinate.DIMENSION; j++)
-            string += j;
-        return string + "\n";
-    }
-
-    private String toStringHorizontalPiecesWithNumbers(int row) {
-        String string = " " + row;
-        for (int j = 0; j < Coordinate.DIMENSION; j++) {
-            Piece piece = this.getPiece(new Coordinate(row, j));
-            if (piece.isNull())
-                string += " ";
-            else {
-                string += piece;
+    public boolean isBlocked(Coordinate coordinate) {
+        Piece piece = this.getPiece(coordinate);
+        for (Coordinate coordinateDiagonal : piece.getDiagonalCoordinates(coordinate)) {
+            if (this.getTargetError(coordinate, coordinateDiagonal).isNull()) {
+                return false;
             }
         }
-        return string + row + "\n";
+        return true;
     }
 
     @Override
@@ -195,16 +177,6 @@ class Board {
         Board other = (Board) obj;
         if (!Arrays.deepEquals(pieces, other.pieces))
             return false;
-        return true;
-    }
-
-    public boolean isBlocked(Coordinate coordinate) {
-        Piece piece = this.getPiece(coordinate);
-        for (Coordinate coordinateDiagonal:piece.getDiagonalCoordinates(coordinate)) {
-            if (this.getTargetError(coordinate, coordinateDiagonal).isNull()) {
-                return false;
-            }
-        }
         return true;
     }
 

@@ -25,23 +25,12 @@ public abstract class Piece {
 		if (this.isTooFarMove(origin, target)) {
 			return Error.TOO_FAR;
 		}
-		return getTargetError(origin, target);
+		return getNotValidWayError(origin, target);
 	}
 
 	protected abstract boolean isTooFarMove(Coordinate origin, Coordinate target);
 
-	Error getJumpTargetError(Coordinate origin, Coordinate target) {
-		if (this.isTooFarJump(origin, target)) {
-			return Error.TOO_FAR;
-		}
-		return getTargetError(origin, target);
-	}
-
-	protected abstract boolean isTooFarJump(Coordinate origin, Coordinate target);
-
-	protected abstract boolean isFinalRow(Coordinate coordinate);
-
-	private Error getTargetError(Coordinate origin, Coordinate target){
+	private Error getNotValidWayError(Coordinate origin, Coordinate target){
 		if(!this.isValidWay(origin, target)){
 			return Error.NOT_VALID_WAY;
 		}
@@ -49,6 +38,17 @@ public abstract class Piece {
 	}
 
 	abstract boolean isValidWay(Coordinate origin, Coordinate target);
+
+	Error getJumpTargetError(Coordinate origin, Coordinate target) {
+		if (this.isTooFarJump(origin, target)) {
+			return Error.TOO_FAR;
+		}
+		return getNotValidWayError(origin, target);
+	}
+	
+	protected abstract boolean isTooFarJump(Coordinate origin, Coordinate target);
+
+	protected abstract boolean isFinalRow(Coordinate coordinate);
 
 	List<Coordinate> getDiagonalCoordinates(Coordinate origin) {
 		List<Coordinate> diagonalCoordinates = new ArrayList<>();
@@ -62,19 +62,13 @@ public abstract class Piece {
 
 	protected abstract List<ConcreteCoordinate> getOrthogonalVectors();
 
-	public Color getColor() {
+	Color getColor() {
 		return this.color;
 	}
 
-	public char getCode() {
+	char getCode() {
 		return this.color.getInitial();
 	}
-
-	@Override
-	public String toString() {
-		return String.valueOf(this.getCode());
-	}
-
 
 	@Override
 	public int hashCode() {

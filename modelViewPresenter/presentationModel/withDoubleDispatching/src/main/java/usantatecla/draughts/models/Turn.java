@@ -39,7 +39,7 @@ class Turn {
     return this.getActivePlayer().getColor();
   }
 
-  void movePiece(Coordinate origin, Coordinate target){
+  void movePiece(Coordinate origin, Coordinate target) {
     this.getActivePlayer().movePiece(origin, target);
   }
 

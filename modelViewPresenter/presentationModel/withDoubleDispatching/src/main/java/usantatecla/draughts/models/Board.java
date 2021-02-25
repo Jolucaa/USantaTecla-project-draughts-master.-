@@ -128,7 +128,7 @@ class Board {
         for (int i = 0; i < Coordinate.DIMENSION; i++) {
             for (int j = 0; j < Coordinate.DIMENSION; j++) {
                 Color color = this.getPiece(new Coordinate(i, j)).getColor();
-                if (color != activeColor && color != Color.NULL) {
+                if (color == activeColor.opposite()) {
                     return false;
                 }
             }

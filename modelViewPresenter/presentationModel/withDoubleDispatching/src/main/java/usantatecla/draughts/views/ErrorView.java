@@ -5,20 +5,17 @@ import usantatecla.draughts.types.Error;
 public abstract class ErrorView {
 
     public static final String[] MESSAGES = {
-            "NOT_EMPTY",
-            "NOT_OWNER",
-            "SAME_COORDINATES",
-            "WRONG_COORDINATES",
-            "NOT_DIAGONAL",
-            "NOT_VALID_WAY",
-            "WITHOUT_EATING",
-            "COLLEAGUE_EATING",
-            "TOO_FAR",
-            "TOO_MUCH_EATINGS",
-            "TOO_MUCH_JUMPS",
-            "BAD_FORMAT",
-            "BLOCKED_PIECE",
-            "NULL"
+            "The square is not empty",
+            "There is not a token of yours",
+            "The origin and target squares are the same",
+            "The coordinates are wrong",
+            "The coordinates are not in diagonal",
+            "Your pawn cannot move in this direction",
+            "You have to eat the opponent's piece!!!",
+            "You cannot eat your pieces",
+            "You are trying to move too far",
+            "You cannot eat more than one piece",
+            "This piece is blocked"
         };
 
     public abstract void writeln(Error error);

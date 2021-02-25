@@ -12,8 +12,6 @@ public enum Error {
     COLLEAGUE_EATING,
     TOO_FAR,
     TOO_MUCH_EATINGS,
-    TOO_MUCH_JUMPS,
-    BAD_FORMAT,
     BLOCKED_PIECE,
     NULL;
 

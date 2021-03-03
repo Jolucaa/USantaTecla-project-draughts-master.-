@@ -20,6 +20,7 @@ public class ConcreteCoordinate implements Coordinate {
 		return false;
 	}
 
+	//TODO main diagonal to diagonal
 	@Override
 	public Direction getDirection(Coordinate coordinate) {
 		if (this.equals(coordinate)) {

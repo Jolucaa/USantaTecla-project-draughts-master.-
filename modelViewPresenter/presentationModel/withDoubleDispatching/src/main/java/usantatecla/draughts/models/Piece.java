@@ -30,7 +30,7 @@ public abstract class Piece {
 
 	protected abstract boolean isTooFarMove(Coordinate origin, Coordinate target);
 
-	private Error getNotValidWayError(Coordinate origin, Coordinate target){
+	private Error getNotValidWayError(Coordinate origin, Coordinate target) {
 		if(!this.isValidWay(origin, target)){
 			return Error.NOT_VALID_WAY;
 		}

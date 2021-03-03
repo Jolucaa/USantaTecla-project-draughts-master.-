@@ -23,22 +23,23 @@ public class Coordinate extends SquareBoundedCoordinate {
     }
 
     public ConcreteCoordinate getOrthogonalVector(Coordinate coordinate) {
-		return new ConcreteCoordinate((int) Math.signum(coordinate.getRow() - this.getRow()),
-				(int) Math.signum(coordinate.getColumn() - this.getColumn()));
-	}
+        return new ConcreteCoordinate((int) Math.signum(coordinate.getRow() - this.getRow()),
+                (int) Math.signum(coordinate.getColumn() - this.getColumn()));
+    }
 
     public boolean isInitialPiecePosition() {
         return (this.getRow() + this.getColumn()) % 2 != 0;
     }
 
-    //TODO COMO MEJORAR ESTO
+    //TODO Refactor
     public List<Coordinate> getDiagonalCoordinates(ConcreteCoordinate orthogonalVector) {
         List<Coordinate> diagonalCoordinates = new ArrayList<>();
         Coordinate coordinate = this.clone();
-        for (int i = 0; i < 2 ; i++) {
+        for (int i = 0; i < 2; i++) {
             coordinate.sum(orthogonalVector);
-            if(coordinate.isValid())
+            if (coordinate.isValid()) {
                 diagonalCoordinates.add(coordinate.clone());
+            }
         }
         return diagonalCoordinates;
     }

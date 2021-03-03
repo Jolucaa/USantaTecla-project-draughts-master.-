@@ -53,7 +53,6 @@ public class Game {
 		this.turn.next();
 	}
 
-	//TODO Dejar el hashCode??
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -1,11 +1,11 @@
 package usantatecla.draughts.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import usantatecla.draughts.types.Color;
 import usantatecla.draughts.types.Coordinate;
 import usantatecla.utils.models.ConcreteCoordinate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Pawn extends Piece {
 
@@ -42,14 +42,14 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected List<ConcreteCoordinate> getOrthogonalVectors () {
+    protected List<ConcreteCoordinate> getOrthogonalVectors() {
         List<ConcreteCoordinate> orthogonalVectors = new ArrayList<>();
-        if (this.color == Color.WHITE){
-            orthogonalVectors.add(new ConcreteCoordinate(-1, -1));
-            orthogonalVectors.add( new ConcreteCoordinate(-1, 1));
-        }else if (this.color == Color.BLACK) {
-            orthogonalVectors.add(new ConcreteCoordinate(1, 1));
-            orthogonalVectors.add( new ConcreteCoordinate(1, -1));
+        int vertical = 1;
+        if (this.color == Color.WHITE) {
+            vertical = -1;
+        }
+        for (int horizontal : new int[]{1, -1}) {
+            orthogonalVectors.add(new ConcreteCoordinate(vertical, horizontal));
         }
         return orthogonalVectors;
     }

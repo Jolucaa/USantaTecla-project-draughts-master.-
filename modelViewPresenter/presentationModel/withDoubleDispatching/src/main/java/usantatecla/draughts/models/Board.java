@@ -37,8 +37,9 @@ class Board {
 
         Piece piece = this.getPiece(origin);
         this.putPiece(origin, Piece.NULL);
-        if(piece.isFinalRow(target))
+        if(piece.isFinalRow(target)) {
             piece = new Draught(piece.getColor());
+        }
         this.putPiece(target, piece);
         this.removePiecesInBetween(origin, target);
     }
@@ -53,8 +54,7 @@ class Board {
 
         this.pieces[coordinate.getRow()][coordinate.getColumn()] = piece;
     }
-    
-    //TODO Como ahorrarnos poner 2 veces el sum
+
     private void removePiecesInBetween(Coordinate origin, Coordinate target) {
         Coordinate coordinate = origin.clone();
         coordinate.sum(origin.getOrthogonalVector(target));
@@ -105,7 +105,6 @@ class Board {
         return this.getPiece(coordinate).getColor();
     }
 
-    //TODO lo mismo de arriba
     private List<Piece> getPiecesInBetween(Coordinate origin, Coordinate target) {
         List<Piece> pieces = new ArrayList<>();
         Coordinate coordinate = origin.clone();

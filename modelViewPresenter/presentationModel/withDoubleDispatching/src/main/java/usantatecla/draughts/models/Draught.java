@@ -33,13 +33,15 @@ public class Draught extends Piece {
         return true;
     }
 
+    //TODO refactor
     @Override
     protected List<ConcreteCoordinate> getOrthogonalVectors() {
         List<ConcreteCoordinate> orthogonalVectors = new ArrayList<>();
-        orthogonalVectors.add(new ConcreteCoordinate(-1, -1));
-        orthogonalVectors.add(new ConcreteCoordinate(-1, 1));
-        orthogonalVectors.add(new ConcreteCoordinate(1, 1));
-        orthogonalVectors.add(new ConcreteCoordinate(1, -1));
+        for (int vertical : new int[]{1, -1}) {
+            for (int horizontal : new int[]{1, -1}) {
+                orthogonalVectors.add(new ConcreteCoordinate(vertical, horizontal));
+            }
+        }
         return orthogonalVectors;
     }
 

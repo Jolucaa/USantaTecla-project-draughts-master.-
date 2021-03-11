@@ -1,4 +1,5 @@
 package usantatecla.draughts.models;
+/*
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -136,3 +137,4 @@ public class CoordinateTest {
         assertEquals(coordinates, origin.getBetweenDiagonalCoordinates(target));
     }
 }
+*/

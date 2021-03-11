@@ -95,7 +95,7 @@ public class BoardTest {
             "        ",
             "b b b b ",
             " b b b b",
-            "w w w w "
+            "W w w W "
         ).build();
         assertThat(board.isBlocked(Color.WHITE), is(true));
         assertThat(board.isBlocked(Color.BLACK), is(true));

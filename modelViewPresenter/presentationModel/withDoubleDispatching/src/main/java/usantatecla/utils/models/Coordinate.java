@@ -7,7 +7,8 @@ public interface Coordinate {
   Direction getDirection(Coordinate coordinate);
   boolean inHorizontal(Coordinate coordinate);
   boolean inVertical(Coordinate coordinate);
-  boolean inDiagonal(Coordinate coordinate);
-  boolean inMainDiagonal();
-
+  boolean inMainDiagonal(Coordinate coordinate);
+  boolean inInverseDiagonal(Coordinate coordinate);
+  int mainDiagonal();
+  int inverseDiagonal();
 }

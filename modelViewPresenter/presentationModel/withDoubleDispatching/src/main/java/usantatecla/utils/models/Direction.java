@@ -6,7 +6,6 @@ public enum Direction {
 	HORIZONTAL,
 	MAIN_DIAGONAL,
 	INVERSE_DIAGONAL,
-	DIAGONAL,
 	NULL;
 
 	public boolean isNull() {

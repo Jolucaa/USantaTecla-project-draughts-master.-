@@ -1,4 +1,5 @@
 package usantatecla.draughts.models;
+/*
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -105,4 +106,4 @@ public class IsBlockedGameTest extends GameTest {
         assertFalse(this.game.isBlocked());
     }
     
-}
+}*/

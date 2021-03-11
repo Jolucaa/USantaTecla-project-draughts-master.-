@@ -31,15 +31,13 @@ public class Coordinate extends SquareBoundedCoordinate {
         return (this.getRow() + this.getColumn()) % 2 != 0;
     }
 
-    //TODO Refactor
     public List<Coordinate> getDiagonalCoordinates(ConcreteCoordinate orthogonalVector) {
         List<Coordinate> diagonalCoordinates = new ArrayList<>();
         Coordinate coordinate = this.clone();
-        for (int i = 0; i < 2; i++) {
+        coordinate.sum(orthogonalVector);
+        for (int i = 0; i < this.getDimension() && coordinate.isValid(); i++) {
+            diagonalCoordinates.add(coordinate.clone());
             coordinate.sum(orthogonalVector);
-            if (coordinate.isValid()) {
-                diagonalCoordinates.add(coordinate.clone());
-            }
         }
         return diagonalCoordinates;
     }

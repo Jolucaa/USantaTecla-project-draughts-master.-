@@ -28,7 +28,7 @@ public class NullPiece extends Piece{
     }
 
     @Override
-    protected List<ConcreteCoordinate> getOrthogonalVectors() {
+    protected List<ConcreteCoordinate> getChildOrthogonalVectors() {
         return new ArrayList<>();
     }
 

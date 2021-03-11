@@ -52,7 +52,7 @@ public abstract class Piece {
 
 	List<Coordinate> getDiagonalCoordinates(Coordinate origin) {
 		List<Coordinate> diagonalCoordinates = new ArrayList<>();
-		for (ConcreteCoordinate coordinate : this.getOrthogonalVectors()) {
+		for (ConcreteCoordinate coordinate : this.getChildOrthogonalVectors()) {
 			for (Coordinate coordinateDiagonal : origin.getDiagonalCoordinates(coordinate)) {
 				diagonalCoordinates.add(coordinateDiagonal);
 			}
@@ -60,7 +60,14 @@ public abstract class Piece {
 		return diagonalCoordinates;
 	}
 
-	protected abstract List<ConcreteCoordinate> getOrthogonalVectors();
+	protected abstract List<ConcreteCoordinate> getChildOrthogonalVectors();
+
+	List<ConcreteCoordinate> getOrthogonalVectors(List<ConcreteCoordinate> orthogonalVectors, int vertical) {
+		for (int horizontal : new int[]{1, -1}) {
+			orthogonalVectors.add(new ConcreteCoordinate(vertical, horizontal));
+		}
+		return orthogonalVectors;
+	}
 
 	Color getColor() {
 		return this.color;

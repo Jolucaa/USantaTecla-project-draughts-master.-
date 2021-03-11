@@ -1,6 +1,6 @@
 package usantatecla.draughts.models;
 
-public class GameTest {
+/*public class GameTest {
 
     protected Game game;
     protected Game expectedGame;
@@ -13,4 +13,4 @@ public class GameTest {
         this.expectedGame = new GameBuilder().color(color).rows(strings).build();
     }
 
-}
+}*/

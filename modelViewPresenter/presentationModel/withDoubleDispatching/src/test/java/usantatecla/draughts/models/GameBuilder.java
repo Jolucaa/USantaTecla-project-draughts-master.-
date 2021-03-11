@@ -1,4 +1,8 @@
 package usantatecla.draughts.models;
+/*
+
+import usantatecla.draughts.types.Color;
+import usantatecla.draughts.types.Coordinate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +46,8 @@ public class GameBuilder {
 
     private void setColor(Game game, Board board) {
         if (this.color == Color.BLACK) {
-            board.put(new Coordinate(7, 0), new Pawn(Color.WHITE));
-            game.move(new Coordinate(7, 0), new Coordinate(6, 1));
+            board.putPiece(new Coordinate(7, 0), new Pawn(Color.WHITE));
+            game.movePiece(new Coordinate(7, 0), new Coordinate(6, 1));
             board.remove(new Coordinate(6, 1));
         }
     }
@@ -74,3 +78,4 @@ public class GameBuilder {
     }
 
 }
+*/

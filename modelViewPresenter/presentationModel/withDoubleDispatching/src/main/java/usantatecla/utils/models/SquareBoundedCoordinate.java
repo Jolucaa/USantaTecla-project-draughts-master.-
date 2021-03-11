@@ -42,15 +42,7 @@ public abstract class SquareBoundedCoordinate {
         if (this.equals(coordinate) || this.isNull() || coordinate.isNull()) {
             return Direction.NULL;
         }
-        if (this.inInverseDiagonal() && coordinate.inInverseDiagonal()) {
-            return Direction.INVERSE_DIAGONAL;
-        }
         return this.adaptee.getDirection(coordinate.adaptee);
-    }
-
-    public boolean inInverseDiagonal() {
-        ConcreteCoordinate coordinate = (ConcreteCoordinate) this.adaptee;
-        return coordinate.getRow() + coordinate.getColumn() == this.getDimension() - 1;
     }
 
     public int getVerticalDistance(SquareBoundedCoordinate coordinate) {

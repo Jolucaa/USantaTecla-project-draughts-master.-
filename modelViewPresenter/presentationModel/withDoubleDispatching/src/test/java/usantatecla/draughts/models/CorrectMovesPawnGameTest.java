@@ -1,4 +1,5 @@
 package usantatecla.draughts.models;
+/*
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
@@ -213,4 +214,4 @@ public class CorrectMovesPawnGameTest extends GameTest {
                 new Coordinate(7,2));
     }
 
-}
+}*/

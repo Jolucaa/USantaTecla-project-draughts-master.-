@@ -1,4 +1,5 @@
 package usantatecla.draughts.models;
+/*
 
 import static org.junit.Assert.assertEquals;
 
@@ -512,3 +513,4 @@ public class IncorrectMovesPawnGameTest extends GameTest {
     }
 
 }
+*/

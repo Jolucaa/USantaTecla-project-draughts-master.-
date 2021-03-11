@@ -42,15 +42,13 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected List<ConcreteCoordinate> getOrthogonalVectors() {
+    protected List<ConcreteCoordinate> getChildOrthogonalVectors() {
         List<ConcreteCoordinate> orthogonalVectors = new ArrayList<>();
         int vertical = 1;
         if (this.color == Color.WHITE) {
             vertical = -1;
         }
-        for (int horizontal : new int[]{1, -1}) {
-            orthogonalVectors.add(new ConcreteCoordinate(vertical, horizontal));
-        }
+        this.getOrthogonalVectors(orthogonalVectors, vertical);
         return orthogonalVectors;
     }
 

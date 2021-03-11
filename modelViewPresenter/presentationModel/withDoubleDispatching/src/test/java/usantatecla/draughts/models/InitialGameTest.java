@@ -1,4 +1,5 @@
 package usantatecla.draughts.models;
+/*
 
 import static org.junit.Assert.assertEquals;
 
@@ -56,4 +57,4 @@ public class InitialGameTest extends GameTest {
         assertEquals(this.expectedGame, this.game);
     }
     
-}
+}*/

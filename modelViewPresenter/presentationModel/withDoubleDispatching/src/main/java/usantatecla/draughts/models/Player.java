@@ -38,7 +38,7 @@ public class Player {
         }
         Direction direction = origin.getDirection(target);
         if (direction != Direction.MAIN_DIAGONAL &&
-                direction != Direction.INVERSE_DIAGONAL && direction != Direction.DIAGONAL) {
+                direction != Direction.INVERSE_DIAGONAL) {
             return Error.NOT_DIAGONAL;
         }
         return this.board.getTargetError(origin, target);

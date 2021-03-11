@@ -1,11 +1,12 @@
 package usantatecla.draughts.models;
-
+/*
 import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+
 
 public class GameBuilderTest {
 
@@ -72,4 +73,4 @@ public class GameBuilderTest {
         assertNull(game.getColor(new Coordinate(7, 1)));
     }
 
-}
+}*/

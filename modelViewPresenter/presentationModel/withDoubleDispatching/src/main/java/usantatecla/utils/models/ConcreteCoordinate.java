@@ -20,7 +20,6 @@ public class ConcreteCoordinate implements Coordinate {
 		return false;
 	}
 
-	//TODO main diagonal to diagonal
 	@Override
 	public Direction getDirection(Coordinate coordinate) {
 		if (this.equals(coordinate)) {
@@ -32,11 +31,11 @@ public class ConcreteCoordinate implements Coordinate {
 		if (this.inVertical(coordinate)) {
 			return Direction.VERTICAL;
 		}
-		if (this.inMainDiagonal() && coordinate.inMainDiagonal()) {
+		if (this.inMainDiagonal(coordinate)) {
 			return Direction.MAIN_DIAGONAL;
 		}
-		if (this.inDiagonal(coordinate)) {
-			return Direction.DIAGONAL;
+		if (this.inInverseDiagonal(coordinate)) {
+			return Direction.INVERSE_DIAGONAL;
 		}
 		return Direction.NULL;
 	}
@@ -57,15 +56,31 @@ public class ConcreteCoordinate implements Coordinate {
 		return this.column == ((ConcreteCoordinate) coordinate).column;
 	}
 
-	//TODO Revisar
+	//TODO simplificar inMainDiagonal con inInverseDiagonal
 	@Override
-	public boolean inDiagonal(Coordinate coordinate) {
-		return getVerticalDistance(coordinate) == getHorizontalDistance(coordinate);
+	public boolean inMainDiagonal(Coordinate coordinate) {
+		if (coordinate.isNull()) {
+			return false;
+		}
+		return this.mainDiagonal() == coordinate.mainDiagonal();
 	}
 
 	@Override
-	public boolean inMainDiagonal() {
-		return this.row - this.column == 0;
+	public int mainDiagonal() {
+		return this.getRow() - this.getColumn();
+	}
+
+	@Override
+	public boolean inInverseDiagonal(Coordinate coordinate) {
+		if (coordinate.isNull()) {
+			return false;
+		}
+		return this.mainDiagonal() == coordinate.inverseDiagonal();
+	}
+
+	@Override
+	public int inverseDiagonal() {
+		return this.getRow() + this.getColumn();
 	}
 
 	public int getVerticalDistance(Coordinate coordinate) {

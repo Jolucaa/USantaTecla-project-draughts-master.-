@@ -29,20 +29,17 @@ public class Draught extends Piece {
     }
 
     @Override
-    boolean isValidWay(Coordinate origin, Coordinate target) {
-        return true;
-    }
-
-    //TODO refactor
-    @Override
-    protected List<ConcreteCoordinate> getOrthogonalVectors() {
+    protected List<ConcreteCoordinate> getChildOrthogonalVectors() {
         List<ConcreteCoordinate> orthogonalVectors = new ArrayList<>();
         for (int vertical : new int[]{1, -1}) {
-            for (int horizontal : new int[]{1, -1}) {
-                orthogonalVectors.add(new ConcreteCoordinate(vertical, horizontal));
-            }
+            this.getOrthogonalVectors(orthogonalVectors, vertical);
         }
         return orthogonalVectors;
+    }
+
+    @Override
+    boolean isValidWay(Coordinate origin, Coordinate target) {
+        return true;
     }
 
     @Override

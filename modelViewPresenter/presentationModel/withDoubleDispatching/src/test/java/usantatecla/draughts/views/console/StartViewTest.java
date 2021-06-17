@@ -1,4 +1,4 @@
-package usantatecla.draughts.views.console;
+/*package usantatecla.draughts.views.console;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ public class StartViewTest {
         this.conversor = new Conversor();
     }
 
-    /*@Test
+    @Test
     public void testGivenStartViewWhenInteractThenInteract() {
         try (MockedStatic<Console> console = mockStatic(Console.class)) {
             console.when(Console::getInstance).thenReturn(this.console);
@@ -55,6 +55,6 @@ public class StartViewTest {
             this.conversor.reorder(argumentCaptorValues);
             assertThat(string, is(this.conversor.arrayToString(argumentCaptorValues.toArray())));
         }
-    }*/
+    }
 
-}
+}*/

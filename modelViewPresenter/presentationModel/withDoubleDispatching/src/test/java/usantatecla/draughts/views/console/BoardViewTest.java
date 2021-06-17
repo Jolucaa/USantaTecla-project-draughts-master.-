@@ -1,4 +1,4 @@
-package usantatecla.draughts.views.console;
+/*package usantatecla.draughts.views.console;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 import usantatecla.draughts.controllers.PlayController;
-//import usantatecla.draughts.models.GameBuilder;
+import usantatecla.draughts.models.GameBuilder;
 import usantatecla.draughts.models.State;
 import usantatecla.utils.views.Console;
 
@@ -34,7 +34,7 @@ public class BoardViewTest {
         this.conversor = new Conversor();
     }
 
-    /*@Test
+    @Test
     public void testGivenBoardViewWhenWriteThenPrint() {
         try (MockedStatic<Console> console = mockStatic(Console.class)) {
             console.when(Console::getInstance).thenReturn(this.console);
@@ -57,6 +57,7 @@ public class BoardViewTest {
             this.conversor.reorder(argumentCaptorValues);
             assertThat(string, is(this.conversor.arrayToString(argumentCaptorValues.toArray())));
         }
-    }*/
+    }
 
 }
+*/

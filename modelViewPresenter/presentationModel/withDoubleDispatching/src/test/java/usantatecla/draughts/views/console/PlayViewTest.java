@@ -25,12 +25,10 @@ public class PlayViewTest {
 
 
     private PlayView playView;
-    private PlayerView playerView;
 
     @BeforeEach
     public void beforeEach(){
         this.playView = new PlayView();
-        this.playerView = spy(new PlayerView(this.playController));
     }
 
     @Test
